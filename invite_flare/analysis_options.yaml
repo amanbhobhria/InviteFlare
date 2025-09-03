@@ -1,0 +1,74 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # The lint rules applied to this project can be customized in the
+  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
+  # included above or to enable additional rules. A list of all available lints
+  # and their documentation is published at https://dart.dev/lints.
+  #
+  # Instead of disabling a lint rule for the entire project in the
+  # section below, it can also be suppressed for a single line of code
+  # or a specific dart file by using the `// ignore: name_of_lint` and
+  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
+  # producing the lint.
+  rules:
+    # Core Dart rules
+    - always_declare_return_types # Enforces explicit return types
+    - annotate_overrides # Require @override annotations
+    - avoid_empty_else # Avoid empty `else` blocks
+    - avoid_print # Avoid using `print`, use a logger instead
+    - camel_case_types # Use camel case for type names
+    - constant_identifier_names # Use UPPER_SNAKE_CASE for constant names
+    - prefer_final_fields # Prefer `final` for fields that do not change
+    - unnecessary_null_checks # Avoid redundant null checks
+    - prefer_const_constructors # Prefer `const` for constructors where possible
+
+    # Code structure and design
+    - avoid_classes_with_only_static_members # Encourage meaningful class design
+    - avoid_redundant_argument_values # Avoid passing default values explicitly
+    - avoid_unnecessary_containers # Avoid `Container` widgets if not needed
+    - prefer_mixin # Encourage using mixins over abstract classes for shared behavior
+    - use_setters_to_change_properties # Encourage using setters for property updates
+
+    # Import and ordering rules
+    - directives_ordering # Sort imports in the correct order
+    - always_use_package_imports # Avoid relative imports outside `lib/`
+
+    # Dead code and optimization
+    - avoid_unused_constructor_parameters # Avoid unused constructor parameters
+    - unnecessary_this # Avoid using `this` where unnecessary
+
+    # Widget and UI-specific rules
+    - prefer_const_declarations # Use `const` for variables where possible
+    - use_key_in_widget_constructors # Always include `Key` in widget constructors
+    - avoid_positional_boolean_parameters # Use named parameters for booleans
+    - use_full_hex_values_for_flutter_colors # Use ARGB color values instead of RGB
+
+    # Null safety
+    - prefer_null_aware_operators # Use null-aware operators where applicable
+    - prefer_is_not_empty # Prefer `isNotEmpty` over `!isEmpty`
+
+    # Formatting and readability
+    - lines_longer_than_80_chars # Enforce line length limit (adjust for your team)
+    - prefer_single_quotes # Use single quotes for strings
+    - sort_unnamed_constructors_first # Maintain consistent ordering of constructors
+    - type_annotate_public_apis # Add type annotations to public APIs
+    - prefer_typing_uninitialized_variables # Explicitly type uninitialized variables
+    - avoid_escaping_inner_quotes # Avoid escaping quotes unnecessarily
+
+    # Testing and debugging
+    - avoid_returning_null_for_future # Avoid `null` in `Future` return values
+
+    # Advanced rules
+    - prefer_expression_function_bodies # Use concise function bodies where possible
+    - prefer_interpolation_to_compose_strings # Use string interpolation instead of concatenation
+    - prefer_final_in_for_each # Use `final` for variables in `forEach` loops
