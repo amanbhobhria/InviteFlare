@@ -6,6 +6,7 @@ import 'package:invite_flare/features/category/presentation/pages/category_page.
 import 'package:invite_flare/features/home/presentation/pages/home_page.dart';
 import 'package:invite_flare/features/main/presentation/blocs/main_bloc/main_bloc.dart';
 import 'package:invite_flare/features/main/presentation/presentation.dart';
+import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
 import 'package:invite_flare/features/search/presentation/pages/search_page.dart';
 
 class MainWrapper extends StatelessWidget {
@@ -45,9 +46,8 @@ class _MainWrapper extends BaseStatelessWidget {
         0 => const HomePage(),
         1 => const SearchPage(),
         2 => const CategoryPage(),
-        3 => const Center(
-            child: IFText(text: 'Setting'),
-          ),
+        3 => const SettingsPage(fromBottomNav: true),
+
         _ => const HomePage()
       };
 }
