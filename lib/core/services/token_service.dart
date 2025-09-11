@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@lazySingleton
 class TokenService {
   static const _accessTokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';
@@ -13,6 +15,7 @@ class TokenService {
 
   // Save Refresh Token
   Future<void> saveRefreshToken(String refreshToken) async {
+    print('refreshToken = $refreshToken');
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_refreshTokenKey, refreshToken);
   }

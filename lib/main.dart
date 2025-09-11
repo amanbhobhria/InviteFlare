@@ -4,7 +4,9 @@ import 'package:invite_flare/core/di/di.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencyInjection('env');
+  // configureDependencyInjection('env');
+  configureDependencyInjection('');
+
   SystemUiHandler.setLightTheme();
   runApp(AppRoot());
 }

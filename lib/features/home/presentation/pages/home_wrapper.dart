@@ -7,6 +7,7 @@ class HomeWrapper extends StatelessWidget {
   const HomeWrapper({super.key});
 
   @override
+<<<<<<< Updated upstream
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarView.home(
@@ -14,6 +15,49 @@ class HomeWrapper extends StatelessWidget {
         appBarEnum: AppBarEnum.home,
         onNotificationPressed: () {},
         onProfilePressed: () {},
+=======
+  Widget build(BuildContext context) => BlocListener<DrawerCubit, DrawerCommand>(
+      listenWhen: (prev, curr) => curr is DrawerOpenRequested,
+      listener: (context, state) {
+        if (state is DrawerOpenRequested) {
+          _openDrawer();
+          context.read<DrawerCubit>().reset();
+        }
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Colors.white,
+        appBar: AppBarView.home(
+          notificationCount: 4,
+          appBarEnum: AppBarEnum.home,
+          onNotificationPressed: () {},
+          onProfilePressed: () {
+            context.read<DrawerCubit>().requestOpen();
+          },
+        ),
+
+        drawer: const SideNav(),
+
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const CategoryWrapper(),
+              const PromoBannerWrapper(),
+              const IFSpace(),
+              Divider(thickness: 8, color: Colors.grey.shade100),
+              const ExpandableCardWrapper(),
+              Divider(thickness: 8, color: Colors.grey.shade100),
+              const ExpandableCardWrapper(),
+              Divider(thickness: 8, color: Colors.grey.shade100),
+              const ExplainerSectionWrapper(),
+              Divider(thickness: 8, color: Colors.grey.shade100),
+              const SloganWrapper(),
+              const IFSpace(space: IFSpaces.xxxxxxL),
+              const IFSpace(space: IFSpaces.xxxxL),
+            ],
+          ),
+        ),
+>>>>>>> Stashed changes
       ),
       body: SingleChildScrollView(
         child: Column(

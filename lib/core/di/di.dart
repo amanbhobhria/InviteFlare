@@ -10,3 +10,4 @@ final getIt = GetIt.instance;
   asExtension: true,
 )
 void configureDependencyInjection(String env) => getIt.init(environment: env);
+
