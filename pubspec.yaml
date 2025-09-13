@@ -51,10 +51,42 @@ dependencies:
   flutter_svg: ^2.0.16
   cached_network_image: ^3.4.1
   lottie: ^3.2.0
-  intl: ^0.20.2
+  intl: 0.19.0
   html_unescape: ^2.0.0
   flutter_colorpicker: ^1.1.0
   permission_handler: ^12.0.0+1
+  get: ^4.6.6
+  dio: ^5.6.0
+  get_storage: ^2.1.1
+  flutter_easyloading: ^3.0.5
+  flutter_screenutil: 
+  image_picker: ^1.1.2
+  photo_view: ^0.15.0
+  otp_pin_field: ^1.2.9+1
+  connectivity_plus: ^5.0.0
+  dropdown_button2: ^2.3.9
+  carousel_slider: ^5.0.0
+  image_cropper:
+  firebase_messaging: ^15.1.0
+  firebase_core: ^3.4.0
+  package_info_plus: ^8.0.2
+  video_player: ^2.9.1
+  file_picker:
+  logger: ^2.4.0
+  cloud_firestore: ^5.4.0
+  colorful_safe_area: ^1.0.0
+  device_info_plus: ^10.1.2
+  path: ^1.9.0
+  firebase_storage: ^12.2.0
+  dots_indicator: ^3.0.0
+  flutter_rating_bar: ^4.0.1
+  syncfusion_flutter_gauges:
+  syncfusion_flutter_calendar:
+  linear_progress_bar: ^1.1.2
+  simple_progress_indicators: ^0.2.0
+  table_calendar: ^3.1.2
+  syncfusion_flutter_core: 25.1.35
+  fancy_shimmer_image: ^2.0.3
   #image_gallery_saver: ^2.0.3
 
 dev_dependencies:

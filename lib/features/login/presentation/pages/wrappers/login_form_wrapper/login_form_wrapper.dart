@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:if_loop_components/if_loop_components.dart';
 import 'package:invite_flare/app/app.dart';
 import 'package:invite_flare/core/base/base_stateless_widget.dart';
 import 'package:invite_flare/core/di/di.dart';
+import 'package:invite_flare/export.dart';
 import 'package:invite_flare/features/login/presentation/presentation.dart';
+import 'package:invite_flare/features/main/presentation/pages/main_page.dart';
 import 'package:invite_flare/shared/presentation/presentation.dart';
 
 class LoginFormWrapper extends StatelessWidget {
@@ -87,10 +90,13 @@ class _LoginFormWrapper extends BaseStatelessWidget {
           ),
           BlocConsumer<LoginFormBloc, LoginFormState>(
             listener: (ctx, state) {
+              print('Statatatt----------${state}');
               if (state is LoginFormSuccess) {
-                context.router.pushAndPopUntil(
-                  const MainRoute(),
-                  predicate: (route) => false,
+                Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                  Get.context!,
+                  MaterialPageRoute(builder: (context) => MainPage()),
+                  (Route<dynamic> route) => false,
                 );
               } else if (state is LoginFormError) {
                 LoginDialogs.showErrorDialog(
