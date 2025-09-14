@@ -13,12 +13,11 @@ class SplashController extends GetxController {
 
   callCheckApi() async {
     final tokenService = TokenService();
-    print('called-------${tokenService.isLoggedIn()}');
     await Future.delayed(const Duration(seconds: 3), () {});
     if (await tokenService.isLoggedIn()) {
       Navigator.pushAndRemoveUntil(
         Get.context!,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => MainPage()),
         (Route<dynamic> route) => false,
       );
     } else {

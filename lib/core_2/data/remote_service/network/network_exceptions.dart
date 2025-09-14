@@ -14,6 +14,7 @@ import 'package:invite_flare/core_2/data/remote_service/network/error_message_re
 
 import '../../../../export.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class NetworkExceptions {
   static String messageData = "";
 

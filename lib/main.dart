@@ -35,7 +35,7 @@ CustomLoader customLoader = CustomLoader();
 TextTheme textTheme = Theme.of(Get.context!).textTheme;
 var tempDir;
 FirebaseFirestore databaseReference = FirebaseFirestore.instance;
-late final APIRepository repository;
+// late final APIRepository repository;
 late final PreferenceManger preferenceManger;
 var deviceToken;
 

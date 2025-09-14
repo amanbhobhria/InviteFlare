@@ -10,6 +10,54 @@
 
 abstract class AppRoutes {
   static const splash = '/splash';
+  static const profileScreen = '/profileScreen';
+  static const settingScreen = '/settingScreen';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ///Old
   static const onBoarding = '/onBoarding';
   static const selectLanguage = '/selectLanguage';
   static const logIn = '/logIn';
@@ -58,7 +106,6 @@ abstract class AppRoutes {
   static const selectActivityScreen = '/selectActivityScreen';
   static const myProfileScreen = '/myProfileScreen';
   static const editProfileScreen = '/EditProfileScreen';
-  static const settingScreen = '/settingScreen';
   static const changePasswordScreen = '/changePasswordScreen';
   static const staticPageScreen = '/staticPageScreen';
   static const aboutScreen = '/aboutScreen';

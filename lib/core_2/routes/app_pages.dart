@@ -7,13 +7,14 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
-
-
+import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
+import 'package:invite_flare/module/profile/binding/profile_binding.dart';
+import 'package:invite_flare/module/profile/views/profile_screen.dart';
+import 'package:invite_flare/module/profile/views/setting_screen.dart';
 import 'package:invite_flare/module/splash_module/binding/splash_binding.dart';
 import 'package:invite_flare/module/splash_module/views/splash_screen.dart';
 
 import '../../export.dart';
-
 
 // ignore: avoid_classes_with_only_static_members
 class AppPages {
@@ -24,6 +25,15 @@ class AppPages {
       page: () => SplashScreen(),
       bindings: [SplashBinding()],
     ),
-    
+    GetPage(
+      name: AppRoutes.profileScreen,
+      page: () => ProfileScreen(),
+      bindings: [ProfileBinding()],
+    ),   
+     GetPage(
+      name: AppRoutes.settingScreen,
+      page: () => SettingScreen(),
+      bindings: [ProfileBinding()],
+    ),
   ];
 }

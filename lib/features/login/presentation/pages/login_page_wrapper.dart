@@ -3,7 +3,9 @@ import 'package:if_loop_components/if_loop_components.dart';
 import 'package:invite_flare/app/extensions/extensions.dart';
 import 'package:invite_flare/app/navigation/app_router.dart';
 import 'package:invite_flare/core/base/base_stateless_widget.dart';
+import 'package:invite_flare/export.dart';
 import 'package:invite_flare/features/login/login.dart';
+import 'package:invite_flare/features/signup/presentation/pages/pages.dart';
 import 'package:invite_flare/shared/presentation/presentation.dart';
 
 class LoginPageWrapper extends StatelessWidget {
@@ -63,25 +65,35 @@ class _LoginPageWrapper extends BaseStatelessWidget {
                 const IFSpace(
                   space: IFSpaces.xxxxL,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IFText(
-                      text: doNotHaveAccount,
-                      textSize: IFTextSize.S,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.router.push(const SignUpRoute());
-                      },
-                      child: IFText(
-                        text: signUpBtnTxt,
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      Get.context!,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IFText(
+                        text: doNotHaveAccount,
                         textSize: IFTextSize.S,
-                        textWeight: IFTextWeight.semiBold,
-                        textColor: IFTextColors.BRAND,
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () {
+                          context.router.push(const SignUpRoute());
+                        },
+                        child: IFText(
+                          text: signUpBtnTxt,
+                          textSize: IFTextSize.S,
+                          textWeight: IFTextWeight.semiBold,
+                          textColor: IFTextColors.BRAND,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),

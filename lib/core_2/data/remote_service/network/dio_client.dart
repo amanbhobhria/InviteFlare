@@ -1,84 +1,77 @@
-/*
- * @copyright : ToXSL Technologies Pvt. Ltd. < www.toxsl.com >
- *  @author     : Shiv Charan Panjeta < shiv@toxsl.com >
- * All Rights Reserved.
- * Proprietary and confidential :  All information contained herein is, and remains
- * the property of ToXSL Technologies Pvt. Ltd. and its partners.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- */
-
-// Package imports:
-
-// Project imports:
-
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invite_flare/core/services/token_service.dart';
 import 'package:invite_flare/core_2/core/values/app_global_values.dart';
 import 'package:invite_flare/core_2/data/local_service/local_keys.dart';
-import 'package:invite_flare/core_2/logger/log_interceptor.dart' as LogInterceptor;
-// import 'package:house_renting_app/app/logger/log_interceptor.dart' as LogInterceptor;
+import 'package:invite_flare/core_2/logger/log_interceptor.dart'
+    as LogInterceptor;
 
+const _defaultConnectTimeout = Duration(seconds: 30);
+const _defaultReceiveTimeout = Duration(seconds: 30);
 
-const _defaultConnectTimeout = Duration();
-const _defaultReceiveTimeout = Duration();
-
-setContentType() {
-  return "application/json";
-}
+String setContentType() => "application/json";
 
 class DioClient {
-  String baseUrl;
+  static const String _baseUrl =
+      'https://dev.inviteflare.com/'; // 🔗 Define here
 
-  static late Dio _dio;
+  final Dio _dio;
 
   final List<Interceptor>? interceptors;
 
   DioClient(
-    this.baseUrl,
     Dio dio, {
     this.interceptors,
-  }) {
-    _dio = dio;
-    _dio
-      ..options.baseUrl = baseUrl
-      ..options.connectTimeout = _defaultConnectTimeout
-      ..options.receiveTimeout = _defaultReceiveTimeout
-      ..httpClientAdapter
-      ..options.contentType = setContentType()
-      ..options.headers = {
+  }) : _dio = dio {
+    _dio.options = BaseOptions(
+      baseUrl: _baseUrl, // Use static base URL
+      connectTimeout: _defaultConnectTimeout,
+      receiveTimeout: _defaultReceiveTimeout,
+      contentType: setContentType(),
+      headers: {
         'Content-Type': setContentType(),
-      };
+      },
+    );
 
     if (interceptors?.isNotEmpty ?? false) {
       _dio.interceptors.addAll(interceptors!);
     }
+
     if (kDebugMode) {
       _dio.interceptors.add(LogInterceptor.LogInterceptor(
-          responseBody: true,
-          error: true,
-          requestHeader: true,
-          responseHeader: false,
-          request: false,
-          requestBody: true));
+        responseBody: true,
+        error: true,
+        requestHeader: true,
+        responseHeader: false,
+        request: false,
+        requestBody: true,
+      ));
     }
   }
 
-  Future<dynamic> get(String uri,
-      {Map<String, dynamic>? queryParameters,
-      Options? options,
-      CancelToken? cancelToken,
-      ProgressCallback? onReceiveProgress,
-      bool? skipAuth}) async {
+  Future<dynamic> get(
+    String uri, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
+    bool skipAuth = false,
+  }) async {
     try {
-      if (skipAuth == false) {
-        var token = await storage.read(LOCALKEY_token);
-        debugPrint("token ${token}");
+      if (!skipAuth) {
+        var token = await TokenService().getAccessToken();
+        debugPrint("Bearer: $token");
+
         if (token != null) {
-          options = Options(headers: {"Authorization": "Token $token"});
+          options ??= Options();
+          options.headers = {
+            ...?options.headers,
+            "Authorization": "Bearer $token",
+          };
         }
       }
+
       var response = await _dio.get(
         uri,
         queryParameters: queryParameters,
@@ -86,35 +79,41 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
+
       return response.data;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
+    } on FormatException {
       throw FormatException("Unable to process the data");
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
-  Future<dynamic> post(String uri,
-      {data,
-      Map<String, dynamic>? queryParameters,
-      Options? options,
-      CancelToken? cancelToken,
-      ProgressCallback? onSendProgress,
-      ProgressCallback? onReceiveProgress,
-      bool? skipAuth}) async {
+  Future<dynamic> post(
+    String uri, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+    bool skipAuth = false,
+  }) async {
     try {
-      if (skipAuth == false) {
-        var token = await storage.read(LOCALKEY_token);
-        debugPrint("authorization============ $token");
+      if (!skipAuth) {
+        var token = await TokenService().getAccessToken();
+        debugPrint("Authorization token: $token");
 
         if (token != null) {
-          if (options == null) {
-            options = Options(headers: {"Authorization": "Token $token"});
-          }
+          options ??= Options();
+          options.headers = {
+            ...?options.headers,
+            "Authorization": "Bearer $token",
+          };
         }
       }
+
       var response = await _dio.post(
         uri,
         data: data,
@@ -124,24 +123,38 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+
       return response.data;
-    } on FormatException catch (_) {
+    } on FormatException {
       throw FormatException("Unable to process the data");
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
-  static Future<dynamic> put(
+  Future<dynamic> put(
     String uri, {
-    data,
+    dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
+    bool skipAuth = false,
   }) async {
     try {
+      if (!skipAuth) {
+        var token = await TokenService().getAccessToken();
+        debugPrint("Authorization token: $token");
+
+        if (token != null) {
+          options ??= Options();
+          options.headers = {
+            ...?options.headers,
+            "Authorization": "Bearer $token",
+          };
+        }
+      }
       var response = await _dio.put(
         uri,
         data: data,
@@ -151,11 +164,12 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+
       return response.data;
-    } on FormatException catch (_) {
+    } on FormatException {
       throw FormatException("Unable to process the data");
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }
