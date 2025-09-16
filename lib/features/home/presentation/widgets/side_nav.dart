@@ -3,11 +3,8 @@ import 'package:invite_flare/core/services/token_service.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
 import 'package:invite_flare/export.dart';
-import 'package:invite_flare/features/invitations/presentation/pages/invitations_page.dart';
-import 'package:invite_flare/features/login/presentation/pages/login_page.dart';
-import 'package:invite_flare/features/profile/presentation/pages/profile_page.dart';
-import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
 import 'package:invite_flare/features/profile/presentation/pages/transactions_page.dart';
+import 'package:invite_flare/module/authentication/views/login_screen.dart';
 import 'package:invite_flare/module/profile/views/invitation_list_screen.dart';
 
 class SideNav extends StatelessWidget {
@@ -29,6 +26,7 @@ class SideNav extends StatelessWidget {
                 title: const Text('Profile'),
                 onTap: () {
                   Navigator.pop(context); // close drawer first
+
                   Get.toNamed(AppRoutes.profileScreen);
                 },
               ),
@@ -82,7 +80,8 @@ class SideNav extends StatelessWidget {
                         await TokenService().deleteAccessToken();
                         Navigator.pushAndRemoveUntil(
                           Get.context!,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
                           (Route<dynamic> route) => false,
                         );
                       }

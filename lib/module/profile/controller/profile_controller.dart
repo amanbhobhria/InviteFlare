@@ -9,8 +9,8 @@ class ProfileController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   File? profileImage;
-  final nameController = TextEditingController(text: "John Doe");
-  final emailController = TextEditingController(text: "john.doe@email.com");
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final phoneController = TextEditingController();
   ProfileResponseModel profileResponseModel = ProfileResponseModel();
   bool isTwoFactorEnabled = false;

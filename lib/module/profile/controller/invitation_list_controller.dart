@@ -61,7 +61,7 @@ class InvitationsController extends GetxController {
       }).onError(
         (error, stackTrace) {
           NetworkExceptions.getDioException(error);
-          toast(NetworkExceptions.messageData);
+          // toast(NetworkExceptions.messageData);
         },
       );
     } catch (e) {
