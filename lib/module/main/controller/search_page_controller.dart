@@ -9,7 +9,12 @@ class SearchPageController extends GetxController {
   // Observables
   var isLoading = false.obs;
   var searchResults = [].obs;
-  var recentSearches = <String>[].obs;
+  var recentSearches = <String>[
+    'Birthday',
+    'christ',
+    'wedd',
+    'Christmas',
+  ].obs;
   var errorMessage = ''.obs;
 
   // Perform search
@@ -18,7 +23,7 @@ class SearchPageController extends GetxController {
     try {
       isLoading.value = true;
 
-      DioClient dioClient = DioClient(Dio()); 
+      DioClient dioClient = DioClient(Dio());
       await dioClient.get(
         'api/v1/search',
         queryParameters: {'q': query},

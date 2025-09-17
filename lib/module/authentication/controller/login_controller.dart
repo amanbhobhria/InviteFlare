@@ -4,7 +4,7 @@ import 'package:invite_flare/core/services/token_service.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
 import 'package:invite_flare/export.dart';
-import 'package:invite_flare/features/main/presentation/pages/main_page.dart';
+import 'package:invite_flare/module/main/views/main_screen.dart';
 
 class LoginController extends GetxController {
   var isLoading = false.obs;
@@ -78,7 +78,7 @@ class LoginController extends GetxController {
           await tokenService.saveRefreshToken(value['data']['refresh_token']);
           await tokenService.saveSession(isLoggedIn: true);
           isLoading.value = false;
-          Get.offAll(() => MainPage()); // navigate to home/main
+          Get.offAll(() => MainScreen()); // navigate to home/main
           debugPrint("✅ Login success: $value");
         }
       }).onError(

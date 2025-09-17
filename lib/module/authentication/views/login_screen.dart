@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:if_loop_components/if_loop_components.dart';
 import 'package:invite_flare/core_2/core/values/dimens.dart';
-import 'package:invite_flare/features/main/presentation/pages/main_page.dart';
 import 'package:invite_flare/module/authentication/controller/login_controller.dart';
 import 'package:invite_flare/module/authentication/views/register_screen.dart';
 import 'package:invite_flare/shared/presentation/pages/wrapper/social_media_wrapper/social_media_wrapper.dart';

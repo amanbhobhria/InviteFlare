@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
-import 'package:invite_flare/features/signup/constants.dart';
 
 class RegisterController extends GetxController {
   final nameController = TextEditingController();
@@ -25,7 +24,7 @@ class RegisterController extends GetxController {
       };
 
       await dioClient
-          .post(Constants.signUp, skipAuth: true, data: request)
+          .post('SignUp', skipAuth: true, data: request)
           .then((value) {
         if (value != null) {
           // ✅ API success
