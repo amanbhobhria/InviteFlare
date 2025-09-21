@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-import 'package:invite_flare/app/navigation/app_router.dart';
 import 'package:invite_flare/core/base/base.dart';
 import 'package:invite_flare/core/services/token_service.dart';
-import 'package:invite_flare/module/authentication/views/login_screen.dart';
 import 'package:invite_flare/module/main/views/main_screen.dart';
 
 class SplashController extends GetxController {
@@ -25,3 +23,6 @@ class SplashController extends GetxController {
     }
   }
 }
+
+
+

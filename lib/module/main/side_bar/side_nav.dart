@@ -8,10 +8,12 @@ import 'package:invite_flare/module/authentication/views/login_screen.dart';
 import 'package:invite_flare/module/profile/views/invitation_list_screen.dart';
 
 class SideNav extends StatelessWidget {
-  const SideNav({super.key});
+  final scaffoldKey;
+  const SideNav({super.key,this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) => Drawer(
+    key:scaffoldKey ,
         child: SafeArea(
           child: ListView(
             padding: EdgeInsets.zero,

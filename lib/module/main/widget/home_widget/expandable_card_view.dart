@@ -30,8 +30,8 @@ class ExpandableCardView extends StatelessWidget {
                 final card = invitationCards[index];
                 return Card(
                   child: ListTile(
-                    title: Text(card['title']),
-                    subtitle: Text(card['description']),
+                    title: Text(card['name']),
+                    subtitle: Text(card['name']),
                   ),
                 );
               },

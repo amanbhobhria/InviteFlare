@@ -13,7 +13,6 @@ import 'package:if_loop_components/if_loop_components.dart';
 import 'package:invite_flare/core/di/di.dart'; // getIt
 
 class HomeScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final homeController = Get.put(
@@ -21,16 +20,20 @@ class HomeScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      key: homeController.scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBarView.home(
         notificationCount: 4,
         appBarEnum: AppBarEnum.home,
         onNotificationPressed: () {},
         onProfilePressed: () {
-          Scaffold.of(context).openDrawer(); // or any drawer logic
+          print('Check Daratatattata-------');
+          homeController.scaffoldKey.currentState?.openDrawer();
         },
       ),
-      drawer: const SideNav(),
+      drawer: SideNav(
+        scaffoldKey: homeController.scaffoldKey,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -63,16 +66,16 @@ class HomeScreen extends StatelessWidget {
             Divider(thickness: 8, color: Colors.grey.shade100),
 
             // Expandable Card 2
-            Obx(() {
-              if (homeController.isExpandableLoading.value) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return ExpandableCardView(
-                heading: homeController.expandableCardData['heading'],
-                description: homeController.expandableCardData['description'],
-                invitationCards: homeController.expandableCardData['cards'],
-              );
-            }),
+            // Obx(() {
+            //   if (homeController.isExpandableLoading.value) {
+            //     return const Center(child: CircularProgressIndicator());
+            //   }
+            //   return ExpandableCardView(
+            //     heading: homeController.expandableCardData['heading'],
+            //     description: homeController.expandableCardData['description'],
+            //     invitationCards: homeController.expandableCardData['cards'],
+            //   );
+            // }),
 
             Divider(thickness: 8, color: Colors.grey.shade100),
 
@@ -89,14 +92,14 @@ class HomeScreen extends StatelessWidget {
 
             Divider(thickness: 8, color: Colors.grey.shade100),
 
-            const SloganWidget(
-              heading: 'Save Environment',
-              sloganText: '''
-Green leaves whisper, life they bring, Save the trees, let nature sing!''',
-            ),
+//             const SloganWidget(
+//               heading: 'Save Environment',
+//               sloganText: '''
+// Green leaves whisper, life they bring, Save the trees, let nature sing!''',
+//             ),
 
-            const IFSpace(space: IFSpaces.xxxxxxL),
-            const IFSpace(space: IFSpaces.xxxxL),
+//             const IFSpace(space: IFSpaces.xxxxxxL),
+//             const IFSpace(space: IFSpaces.xxxxL),
           ],
         ),
       ),
