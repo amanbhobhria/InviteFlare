@@ -12,14 +12,12 @@ class _SloganWrapper extends StatelessWidget {
   const _SloganWrapper();
 
   @override
-  Widget build(BuildContext context) => const SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: SloganView(
-          heading: 'Save Environment',
-          sloganText: '''
+  Widget build(BuildContext context) => const SloganView(
+
+        heading: 'Save Environment',
+        sloganText: '''
 Green leaves whisper, life they bring, Save the trees, let nature sing!''',
-        ),
-      ),
-    );
+      );
 }
+
+

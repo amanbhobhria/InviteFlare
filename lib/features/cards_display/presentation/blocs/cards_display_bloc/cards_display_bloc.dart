@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:invite_flare/core/base/base.dart';
 import 'package:invite_flare/features/cards_display/domain/domain.dart';
-
 part 'cards_display_event.dart';
 part 'cards_display_state.dart';
 

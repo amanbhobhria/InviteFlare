@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:if_loop_components/if_loop_components.dart';
+import 'package:invite_flare/core_2/routes/app_routes.dart';
 import 'package:invite_flare/features/home/presentation/presentation.dart';
+import 'package:invite_flare/module/home_2/views/search_screen.dart';
 import 'package:invite_flare/shared/presentation/presentation.dart';
-
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/drawer/drawer_cubit.dart';
 import '../widgets/side_nav.dart';
@@ -45,6 +46,28 @@ class HomeWrapper extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
+
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextField(
+                  readOnly: true,
+                  onTap: () {
+                    // open search screen
+                    Get.toNamed(AppRoutes.searchCategoryScreen);
+
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Search...",
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+
+
+
               const CategoryWrapper(),
               const PromoBannerWrapper(),
               const IFSpace(),
@@ -66,62 +89,3 @@ class HomeWrapper extends StatelessWidget {
 }
 
 
-
-
-
-
-
-
-// class HomeWrapper extends StatelessWidget {
-//   const HomeWrapper({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBarView.home(
-//         notificationCount: 4,
-//         appBarEnum: AppBarEnum.home,
-//         onNotificationPressed: () {},
-//         onProfilePressed: () {
-//
-//           print("profile button pressed");
-//
-//
-//         },
-//       ),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//             const CategoryWrapper(),
-//             const PromoBannerWrapper(),
-//             const IFSpace(),
-//             Divider(
-//               thickness: 8,
-//               color: Colors.grey.shade100,
-//             ),
-//             const ExpandableCardWrapper(),
-//             Divider(
-//               thickness: 8,
-//               color: Colors.grey.shade100,
-//             ),
-//             const ExpandableCardWrapper(),
-//             Divider(
-//               thickness: 8,
-//               color: Colors.grey.shade100,
-//             ),
-//             const ExplainerSectionWrapper(),
-//             Divider(
-//               thickness: 8,
-//               color: Colors.grey.shade100,
-//             ),
-//             const SloganWrapper(),
-//             const IFSpace(
-//               space: IFSpaces.xxxxxxL,
-//             ),
-//             const IFSpace(
-//               space: IFSpaces.xxxxL,
-//             ),
-//           ],
-//         ),
-//       ));
-// }

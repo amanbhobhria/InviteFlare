@@ -25,20 +25,18 @@ class SettingsWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text("Account Settings"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(
-          bottom: fromBottomNav ? kBottomNavigationBarHeight + 16 : 16,
-          left: 16,
-          right: 16,
-          top: 16,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: const Text("Account Settings"),
         ),
-        child: const SettingsSections(),
-      ),
-    );
+        body: Padding(
+          padding: EdgeInsets.only(
+            bottom: fromBottomNav ? kBottomNavigationBarHeight + 16 : 16,
+            left: 16,
+            right: 16,
+            top: 16,
+          ),
+          child: const SettingsSections(),
+        ),
+      );
 }
-
-
-
