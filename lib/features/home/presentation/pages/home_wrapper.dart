@@ -14,11 +14,12 @@ import '../widgets/side_nav.dart';
 class HomeWrapper extends StatelessWidget {
   HomeWrapper({super.key});
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void _openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
+
   @override
   Widget build(BuildContext context) => BlocListener<DrawerCubit, DrawerCommand>(
       listenWhen: (prev, curr) => curr is DrawerOpenRequested,
@@ -46,27 +47,6 @@ class HomeWrapper extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: TextField(
-                  readOnly: true,
-                  onTap: () {
-                    // open search screen
-                    Get.toNamed(AppRoutes.searchCategoryScreen);
-
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Search...",
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-
-
 
               const CategoryWrapper(),
               const PromoBannerWrapper(),

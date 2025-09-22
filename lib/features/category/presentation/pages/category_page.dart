@@ -15,7 +15,7 @@ class _CategoryPageWrapper extends BaseStatelessWidget {
   const _CategoryPageWrapper();
 
   @override
-  Widget buildWidget(BuildContext context) => Scaffold(
+  Widget buildWidget(BuildContext context) => const Scaffold(
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -26,12 +26,13 @@ class _CategoryPageWrapper extends BaseStatelessWidget {
               backgroundColor: Colors.white,
               surfaceTintColor: Colors.white,
               title: IFHeading(
-                text: categoryNavTxt,
+                // text: categoryNavTxt,
+                text: 'a,am',
                 headingSize: IFHeadingSize.xxxxL,
                 textWeight: IFTextWeight.regular,
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: CategoriesWrapper(),
             )
           ],

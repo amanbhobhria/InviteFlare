@@ -5,6 +5,7 @@ import 'package:invite_flare/module/home_2/model/search_category_response_model.
 
 
 class SearchCategoryScreen extends StatelessWidget {
+
   final SearchCategoryController controller =
   Get.put(SearchCategoryController());
 
@@ -12,19 +13,22 @@ class SearchCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: controller.searchController,
-          autofocus: true,
-          decoration: const InputDecoration(
-            hintText: "Search categories...",
-            border: InputBorder.none,
-          ),
-          onChanged: (query) {
-            controller.searchCategory(query);
-          },
+    appBar: AppBar(
+      backgroundColor: Colors.white, // 👈 Optional: make AppBar white too
+      elevation: 0, // 👈 Removes shadow if you want clean white look
+      title: TextField(
+        controller: controller.searchController,
+        autofocus: true,
+        decoration: const InputDecoration(
+          hintText: "Search categories...",
+          border: InputBorder.none,
         ),
+        onChanged: (query) {
+          controller.searchCategory(query);
+        },
       ),
+    ),
+
       body: GetBuilder<SearchCategoryController>(
         builder: (ctrl) {
           if (ctrl.isLoading) {
@@ -54,7 +58,7 @@ class SearchCategoryScreen extends StatelessWidget {
                 )
                     : const Icon(Icons.image, size: 50),
                 title: Text(item.title ?? ""),
-                subtitle: Text(item.slug ?? ""),
+
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {
                   // TODO: handle navigation (maybe open detail screen using item.navLink or uuid)

@@ -7,6 +7,7 @@ import 'package:invite_flare/features/main/presentation/blocs/main_bloc/main_blo
 import 'package:invite_flare/features/main/presentation/presentation.dart';
 import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
 import 'package:invite_flare/features/search/presentation/pages/search_page.dart';
+import 'package:invite_flare/module/home_2/views/search_screen.dart';
 
 class MainWrapper extends StatelessWidget {
   const MainWrapper({super.key});
@@ -17,6 +18,7 @@ class MainWrapper extends StatelessWidget {
         child: const _MainWrapper(),
       );
 }
+
 
 class _MainWrapper extends BaseStatelessWidget {
   const _MainWrapper();
@@ -38,15 +40,16 @@ class _MainWrapper extends BaseStatelessWidget {
         ),
       );
 
+
   Widget _getPage({
     required int pageNo,
   }) =>
       switch (pageNo) {
         0 => const HomePage(),
-        1 => const SearchPage(),
+        // 1 => const SearchPage(),
+        1 => SearchCategoryScreen(),
         2 => const CategoryPage(),
         3 => const SettingsPage(fromBottomNav: true),
-
         _ => const HomePage()
       };
 }

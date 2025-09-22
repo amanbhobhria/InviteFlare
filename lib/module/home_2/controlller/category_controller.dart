@@ -5,13 +5,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
-import 'package:invite_flare/module/home_2/model/search_category_response_model.dart';
+import 'package:invite_flare/module/home_2/model/category_list_response_model.dart';
 
 
-class SearchCategoryController extends GetxController {
+
+class CategoryController extends GetxController {
   final searchController = TextEditingController();
-  SearchCategoryResponseModel? searchResponse;
-
+  CategoryListResponseModel? categoryListResponseModel;
   bool isLoading = false;
 
   Future<void> searchCategory(String query) async {
@@ -25,10 +25,7 @@ class SearchCategoryController extends GetxController {
       await dioClient
           .get('v1/search', skipAuth: false, queryParameters: {"q": query})
           .then((value) {
-        if (value != null) {
-          searchResponse = SearchCategoryResponseModel.fromJson(value);
-          debugPrint("Search Response: ${searchResponse?.data.length}");
-        }
+
       }).onError((error, stackTrace) {
         NetworkExceptions.getDioException(error);
       });
