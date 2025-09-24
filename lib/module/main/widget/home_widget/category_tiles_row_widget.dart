@@ -35,4 +35,6 @@ class CategoryTilesRow extends StatelessWidget {
           ),
         ),
       );
+
+
 }

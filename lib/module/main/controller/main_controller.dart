@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:invite_flare/module/main/controller/home_controller.dart';
 
 class MainController extends GetxController {
   final RxInt _pageNo = 0.obs;
@@ -8,5 +9,9 @@ class MainController extends GetxController {
 
   void updatePage(int index) {
     pageNo = index;
+    if (pageNo == 0) {
+      Get.put(
+          HomeController()); // Clear search text or any other state if needed
+    }
   }
 }

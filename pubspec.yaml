@@ -87,7 +87,6 @@ dependencies:
   table_calendar: ^3.1.2
   syncfusion_flutter_core: 25.1.35
   fancy_shimmer_image: ^2.0.3
-  background_fetch: ^1.4.0
   #image_gallery_saver: ^2.0.3
 
 dev_dependencies:

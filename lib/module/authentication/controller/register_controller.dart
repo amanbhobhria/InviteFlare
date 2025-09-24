@@ -24,7 +24,7 @@ class RegisterController extends GetxController {
       };
 
       await dioClient
-          .post('SignUp', skipAuth: true, data: request)
+          .post('api/v1/auth/register', skipAuth: true, data: request)
           .then((value) {
         if (value != null) {
           // ✅ API success

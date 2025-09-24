@@ -22,6 +22,7 @@ import 'package:invite_flare/core_2/data/remote_service/network/api_provider.dar
 import 'package:invite_flare/core_2/logger/logger_utils.dart';
 import 'package:invite_flare/core_2/routes/app_pages.dart';
 
+
 import 'package:invite_flare/module/splash_module/binding/splash_binding.dart';
 import 'package:logger/logger.dart';
 
@@ -110,6 +111,8 @@ class MyApp extends StatelessWidget {
           // localizationsDelegates: ,
           builder: EasyLoading.init(),
           // defaultTransition: Transition.cupertino,
+
+
         ),
       ),
     );

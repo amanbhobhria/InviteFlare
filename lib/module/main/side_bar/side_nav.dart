@@ -27,8 +27,6 @@ class SideNav extends StatelessWidget {
                 leading: const Icon(Icons.person),
                 title: const Text('Profile'),
                 onTap: () {
-                  scaffoldKey.closeDrawer();
-
                   Get.toNamed(AppRoutes.profileScreen);
                 },
               ),
@@ -36,7 +34,6 @@ class SideNav extends StatelessWidget {
                 leading: const Icon(Icons.mail),
                 title: const Text('Invitations'),
                 onTap: () {
-                  scaffoldKey.closeDrawer();
                   Get.to(() => InvitationsListScreen());
                 },
               ),
@@ -44,7 +41,6 @@ class SideNav extends StatelessWidget {
                 leading: const Icon(Icons.account_balance_wallet),
                 title: const Text('Transactions'),
                 onTap: () {
-                  scaffoldKey.closeDrawer();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

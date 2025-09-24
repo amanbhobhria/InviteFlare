@@ -1,6 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:invite_flare/core/base/base.dart';
 import 'package:invite_flare/core/base/usecase.dart';
+import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
+import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
+import 'package:invite_flare/module/main/model/categories_response_model.dart';
 import 'package:invite_flare/module/main/widget/use_cases/categories_use_case.dart';
 import 'package:invite_flare/shared/domain/entities/category_entity.dart';
 
@@ -8,6 +12,7 @@ class HomeController extends GetxController {
   //  final ExplainerUseCase explainerUseCase;
   // final ExpandableCardUseCase expandableCardUseCase;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<CateroiesResponseModel> cateroiesResponseModel = [];
   // Category
   var isCategoryLoading = false.obs;
   var categories = <CategoryEntity>[
@@ -112,19 +117,40 @@ Fill their inbox with cheer with Christmas cards you can email, text, or share''
   }
 
   Future<void> fetchAll() async {
-    // fetchExplainerSection();
+    fetchCategories();
     // fetchExpandableCards();
   }
 
-  // Future<void> fetchCategories() async {
-  //   try {
-  //     isCategoryLoading.value = true;
-  //     final result = await categoriesUseCase(NoParams(categoryName: ''));
-  //     categories.assignAll(result);
-  //   } finally {
-  //     isCategoryLoading.value = false;
-  //   }
-  // }
+  Future<void> fetchCategories() async {
+    try {
+      isCategoryLoading.value = true;
+      await DioClient(Dio())
+          .get('api/v1/invitations/mob/categories', skipAuth: false)
+          .then(
+        (value) {
+          if (value != null) {
+            if (value is List) {
+              cateroiesResponseModel.clear(); // old data hatane ke liye
+              cateroiesResponseModel.addAll(
+                value.map((e) => CateroiesResponseModel.fromJson(e)).toList(),
+              );
+            }
+            print(
+                'Cateriiiiiiiiiiiiiiii--------------${cateroiesResponseModel.length}');
+            update();
+          }
+        },
+      ).onError(
+        (error, stackTrace) {
+          print('Error---$error');
+          print('Error---$stackTrace');
+          NetworkExceptions.getDioException(error);
+        },
+      );
+    } finally {
+      isCategoryLoading.value = false;
+    }
+  }
 
   // Future<void> fetchExplainerSection() async {
   //   try {
