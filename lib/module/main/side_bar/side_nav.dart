@@ -9,11 +9,11 @@ import 'package:invite_flare/module/profile/views/invitation_list_screen.dart';
 
 class SideNav extends StatelessWidget {
   final scaffoldKey;
-  const SideNav({super.key,this.scaffoldKey});
+  const SideNav({super.key, this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) => Drawer(
-    key:scaffoldKey ,
+        key: scaffoldKey,
         child: SafeArea(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -27,7 +27,7 @@ class SideNav extends StatelessWidget {
                 leading: const Icon(Icons.person),
                 title: const Text('Profile'),
                 onTap: () {
-                  Navigator.pop(context); // close drawer first
+                  scaffoldKey.closeDrawer();
 
                   Get.toNamed(AppRoutes.profileScreen);
                 },
@@ -36,7 +36,7 @@ class SideNav extends StatelessWidget {
                 leading: const Icon(Icons.mail),
                 title: const Text('Invitations'),
                 onTap: () {
-                  Navigator.pop(context);
+                  scaffoldKey.closeDrawer();
                   Get.to(() => InvitationsListScreen());
                 },
               ),
@@ -44,7 +44,7 @@ class SideNav extends StatelessWidget {
                 leading: const Icon(Icons.account_balance_wallet),
                 title: const Text('Transactions'),
                 onTap: () {
-                  Navigator.pop(context);
+                  scaffoldKey.closeDrawer();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

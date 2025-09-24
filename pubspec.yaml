@@ -59,7 +59,7 @@ dependencies:
   dio: ^5.6.0
   get_storage: ^2.1.1
   flutter_easyloading: ^3.0.5
-  flutter_screenutil: 
+  flutter_screenutil:
   image_picker: ^1.1.2
   photo_view: ^0.15.0
   otp_pin_field: ^1.2.9+1
@@ -87,6 +87,7 @@ dependencies:
   table_calendar: ^3.1.2
   syncfusion_flutter_core: 25.1.35
   fancy_shimmer_image: ^2.0.3
+  background_fetch: ^1.4.0
   #image_gallery_saver: ^2.0.3
 
 dev_dependencies:
