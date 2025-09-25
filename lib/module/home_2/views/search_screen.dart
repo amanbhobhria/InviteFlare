@@ -14,8 +14,8 @@ class SearchCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      backgroundColor: Colors.white, // 👈 Optional: make AppBar white too
-      elevation: 0, // 👈 Removes shadow if you want clean white look
+      backgroundColor: Colors.white,
+      elevation: 0,
       title: TextField(
         controller: controller.searchController,
         autofocus: true,
@@ -41,32 +41,73 @@ class SearchCategoryScreen extends StatelessWidget {
           }
 
           List<Data> items = ctrl.searchResponse!.data;
-
           return ListView.separated(
             padding: const EdgeInsets.all(12),
             itemCount: items.length,
             separatorBuilder: (_, __) => const Divider(),
             itemBuilder: (context, index) {
               final item = items[index];
-              return ListTile(
-                leading: item.thumb != null
-                    ? Image.network(
-                  item.thumb,
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                )
-                    : const Icon(Icons.image, size: 50),
-                title: Text(item.title ?? ""),
-
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              return InkWell(
                 onTap: () {
-                  // TODO: handle navigation (maybe open detail screen using item.navLink or uuid)
                   debugPrint("Tapped: ${item.uuid}");
                 },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    item.thumb != null
+                        ? Image.network(
+                      item.thumb,
+                      height: 180, // bigger height
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                        : const Icon(Icons.image, size: 120),
+                    const SizedBox(height: 8),
+                    Text(
+                      item.title ?? "",
+                      style: const TextStyle(
+                        fontSize: 14, // smaller than default
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               );
             },
           );
+
+
+
+
+
+
+          // return ListView.separated(
+          //   padding: const EdgeInsets.all(12),
+          //   itemCount: items.length,
+          //   separatorBuilder: (_, __) => const Divider(),
+          //   itemBuilder: (context, index) {
+          //     final item = items[index];
+          //     return ListTile(
+          //       leading: item.thumb != null
+          //           ? Image.network(
+          //         item.thumb,
+          //         width: 50,
+          //         height: 50,
+          //         fit: BoxFit.cover,
+          //       )
+          //           : const Icon(Icons.image, size: 50),
+          //       title: Text(item.title ?? ""),
+          //
+          //
+          //       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          //       onTap: () {
+          //         // TODO: handle navigation (maybe open detail screen using item.navLink or uuid)
+          //         debugPrint("Tapped: ${item.uuid}");
+          //       },
+          //     );
+          //   },
+          // );
         },
       ),
     );
