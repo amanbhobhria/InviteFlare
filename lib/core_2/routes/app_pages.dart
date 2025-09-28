@@ -8,7 +8,7 @@
  */
 
 import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
-import 'package:invite_flare/module/card/views/card_detail_screen.dart';
+import 'package:invite_flare/module/card/card/views/card_detail_screen.dart';
 import 'package:invite_flare/module/profile/binding/profile_binding.dart';
 import 'package:invite_flare/module/profile/views/profile_screen.dart';
 import 'package:invite_flare/module/profile/views/setting_screen.dart';
