@@ -9,7 +9,7 @@ part 'cards_display_state.dart';
 
 @injectable
 class CardsDisplayBloc extends Bloc<CardsDisplayEvent, CardsDisplayState> {
-  final SubcategoriesAndFilterUseCase subcategoriesAndFilterUseCase;
+  final  subcategoriesAndFilterUseCase;
 
   CardsDisplayBloc({
     required this.subcategoriesAndFilterUseCase,

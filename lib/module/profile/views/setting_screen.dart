@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:invite_flare/module/profile/controller/setting_controller.dart';
 
 class SettingScreen extends StatelessWidget {
-  final SettingsController controller = Get.find<SettingsController>();
+  final SettingsController controller = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class SettingScreen extends StatelessWidget {
                 TextField(
                   controller: controller.oldPassword,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Old Password *",
                     border: OutlineInputBorder(),
                   ),
@@ -116,9 +116,6 @@ class SettingScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       controller.callChangePasswordApi();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Password updated")),
-                      );
                     },
                     child: const Text("Save"),
                   ),
@@ -149,7 +146,9 @@ class SettingScreen extends StatelessWidget {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {
+                      print('Check Datatttatata---------');
                       controller.callDeleteAccountApi();
+                      print('Check Datatttatata1111111111111---------');
                     },
                     child: const Text("Delete"),
                   ),

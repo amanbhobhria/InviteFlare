@@ -31,7 +31,8 @@ class _CardDetailsWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBarView.other(
-          pageTitle: card.title ?? '',
+          pageTitle: 'card.title',
+        
         ),
         body: SingleChildScrollView(
           child: Padding(

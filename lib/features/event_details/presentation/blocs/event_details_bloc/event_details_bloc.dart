@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:invite_flare/core/base/base.dart';
 import 'package:invite_flare/core/network/api_handler.dart';
-import 'package:invite_flare/features/category/constants.dart';
 import 'package:invite_flare/features/event_details/event_details.dart';
 import 'package:invite_flare/shared/domain/entities/guest_entity.dart';
 
@@ -171,7 +170,7 @@ class EventDetailsBloc extends Bloc<EventDetailsEvent, EventDetailsState> {
             : null,
       };
 
-      final response = await _apiHandler.post(Constants.updateEventInfo,
+      final response = await _apiHandler.post('Constants.updateEventInfo',
           body: data, headers: {'Accept': 'application/json'});
       return response;
     } catch (e) {
@@ -188,7 +187,7 @@ class EventDetailsBloc extends Bloc<EventDetailsEvent, EventDetailsState> {
       final data = {"cId": cId, "guests": guestList};
 
       final response = await _apiHandler.post(
-        Constants.updateGuestInfo,
+        'Constants.updateGuestInfo',
         body: data,
         headers: {'Accept': 'application/json'},
       );

@@ -6,41 +6,42 @@ class RecentSearchView extends StatelessWidget {
   final List<String> recentSearches;
   final String heading;
   final Function(String) onTapDelete;
+  final Function(String)? onTapSearch; // <-- new callback
 
   const RecentSearchView({
     super.key,
     required this.recentSearches,
     required this.onTapDelete,
     required this.heading,
+    this.onTapSearch,
   });
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IFText(
-              text: heading,
-              textSize: IFTextSize.xxS,
-              textColor: IFTextColors.BODY,
-            ),
-            const IFSpace(
-              space: IFSpaces.xxS,
-            ),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: List.generate(
-                recentSearches.length,
-                (index) => RecentSearchItem(
-                  text: recentSearches[index],
-                  onTapDelete: () => onTapDelete(recentSearches[index]),
-                ),
-              ),
-            ),
-          ],
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IFText(
+          text: heading,
+          textSize: IFTextSize.xxS,
+          textColor: IFTextColors.BODY,
         ),
-      );
+        const IFSpace(space: IFSpaces.xxS),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: List.generate(
+            recentSearches.length,
+                (index) => RecentSearchItem(
+              text: recentSearches[index],
+              onTapDelete: () => onTapDelete(recentSearches[index]),
+              onTap: () => onTapSearch?.call(recentSearches[index]), // 👈 support tap
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

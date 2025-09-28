@@ -53,7 +53,7 @@ class InvitationsController extends GetxController {
     try {
       DioClient dioClient = DioClient(Dio()); // ✅ No need to pass baseUrl
 
-      await dioClient.get('v1/user/invitations',
+      await dioClient.get('api/v1/user/invitations',
           skipAuth: false, queryParameters: {'type': 'greeting'}).then((value) {
         if (value != null) {
           debugPrint("User Profile: ${jsonDecode(value)}");
@@ -61,7 +61,7 @@ class InvitationsController extends GetxController {
       }).onError(
         (error, stackTrace) {
           NetworkExceptions.getDioException(error);
-          toast(NetworkExceptions.messageData);
+          // toast(NetworkExceptions.messageData);
         },
       );
     } catch (e) {

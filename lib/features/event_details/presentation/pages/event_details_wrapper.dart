@@ -169,14 +169,12 @@ class _EventDetailsWrapperState extends State<_EventDetailsWrapper>
                                   isValid = false;
                                 }
                               }
-
-                              if (!isValid) {
+                              if (!isValid) {     
                                 SnackBarUtils.show(
                                     context: context,
                                     message: 'Please fill all required fields');
                                 return;
                               }
-
                               // On RSVP tab, call API via BLoC event
                               if (_tabController.index == 1) {
                                 context
@@ -184,7 +182,6 @@ class _EventDetailsWrapperState extends State<_EventDetailsWrapper>
                                     .add(SubmitEventInfoEvent("41nDOPdmKQRL"));
                                 return;
                               }
-
                               // On Add Guest tab and Finish button
                               else if (_tabController.index == 2) {
                                 context

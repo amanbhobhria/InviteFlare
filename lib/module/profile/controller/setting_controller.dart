@@ -6,7 +6,7 @@ import 'package:invite_flare/core/services/token_service.dart';
 import 'package:invite_flare/core_2/core/widgets/custom_flashbar.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
-import 'package:invite_flare/features/login/presentation/pages/login_page.dart';
+import 'package:invite_flare/module/authentication/views/login_screen.dart';
 
 class SettingsController extends GetxController {
   // Notifications list
@@ -54,13 +54,13 @@ class SettingsController extends GetxController {
         'session_logout': 1,
       };
       await dioClient
-          .put('v1/user/change-password', skipAuth: false, data: request)
+          .put('api/v1/user/change-password', skipAuth: false, data: request)
           .then((value) async {
         if (value != null) {
           await TokenService().deleteAccessToken();
           Navigator.pushAndRemoveUntil(
             Get.context!,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginScreen()),
             (Route<dynamic> route) => false,
           );
           debugPrint("User Profile: $value");
@@ -83,13 +83,13 @@ class SettingsController extends GetxController {
         'email': emailTextController.text,
       };
       await dioClient
-          .post('v1/user/account/delete', skipAuth: false, data: request)
+          .post('api/v1/user/account/delete', skipAuth: false, data: request)
           .then((value) async {
         if (value != null) {
           await TokenService().deleteAccessToken();
           Navigator.pushAndRemoveUntil(
             Get.context!,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginScreen()),
             (Route<dynamic> route) => false,
           );
           debugPrint("User Profile: $value");

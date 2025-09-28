@@ -9,8 +9,8 @@ class ProfileController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   File? profileImage;
-  final nameController = TextEditingController(text: "John Doe");
-  final emailController = TextEditingController(text: "john.doe@email.com");
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final phoneController = TextEditingController();
   ProfileResponseModel profileResponseModel = ProfileResponseModel();
   bool isTwoFactorEnabled = false;
@@ -51,7 +51,7 @@ class ProfileController extends GetxController {
     try {
       DioClient dioClient = DioClient(Dio()); // ✅ No need to pass baseUrl
 
-      await dioClient.get('v1/user', skipAuth: false).then((value) {
+      await dioClient.get('api/v1/user', skipAuth: false).then((value) {
         if (value != null) {
           profileResponseModel = ProfileResponseModel.fromJson(value);
           setData();
@@ -78,7 +78,7 @@ class ProfileController extends GetxController {
         'two_factor': isTwoFactorEnabled ? 1 : 0,
       };
       await dioClient
-          .put('v1/user/update', skipAuth: false, data: request)
+          .put('api/v1/user/update', skipAuth: false, data: request)
           .then((value) {
         if (value != null) {
           profileResponseModel = ProfileResponseModel.fromJson(value);

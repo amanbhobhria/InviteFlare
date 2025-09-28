@@ -21,13 +21,13 @@ import 'package:invite_flare/core_2/data/local_service/preference/preference_man
 import 'package:invite_flare/core_2/data/remote_service/network/api_provider.dart';
 import 'package:invite_flare/core_2/logger/logger_utils.dart';
 import 'package:invite_flare/core_2/routes/app_pages.dart';
-import 'package:invite_flare/features/login/data/repositories/repositories.dart';
-import 'package:invite_flare/features/login/presentation/blocs/login_form_bloc/login_form_bloc.dart';
+
+
 import 'package:invite_flare/module/splash_module/binding/splash_binding.dart';
 import 'package:logger/logger.dart';
 
 import 'export.dart';
-   LoginRepository? _loginRepository;
+
 var randomNumber;
 var log = Logger();
 GetStorage storage = GetStorage();
@@ -96,28 +96,23 @@ class MyApp extends StatelessWidget {
         }
       },
       child: ScreenUtilInit(
-        builder: (context, widget) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => LoginFormBloc(loginRepository: _loginRepository!)),
-       
-          ],
-          child: 
-     GetMaterialApp(
-            theme: ThemeConfig.lightTheme,
-            initialBinding: SplashBinding(),
-            initialRoute: AppPages.INITIAL,
-            getPages: AppPages.routes,
-            scaffoldMessengerKey: GlobalVariable.navState,
-            debugShowCheckedModeBanner: false,
-            enableLog: true,
-            logWriterCallback: LoggerX.write,
-            locale: TranslationService.locale,
-            fallbackLocale: TranslationService.fallbackLocale,
-            translations: TranslationService(),
-            // localizationsDelegates: ,
-            builder: EasyLoading.init(),
-            // defaultTransition: Transition.cupertino,
-          ),
+        builder: (context, widget) => GetMaterialApp(
+          theme: ThemeConfig.lightTheme,
+          initialBinding: SplashBinding(),
+          initialRoute: AppPages.INITIAL,
+          getPages: AppPages.routes,
+          scaffoldMessengerKey: GlobalVariable.navState,
+          debugShowCheckedModeBanner: false,
+          enableLog: true,
+          logWriterCallback: LoggerX.write,
+          locale: TranslationService.locale,
+          fallbackLocale: TranslationService.fallbackLocale,
+          translations: TranslationService(),
+          // localizationsDelegates: ,
+          builder: EasyLoading.init(),
+          // defaultTransition: Transition.cupertino,
+
+
         ),
       ),
     );

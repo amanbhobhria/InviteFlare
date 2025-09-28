@@ -4,16 +4,21 @@ import 'package:invite_flare/core/base/base.dart';
 
 class RecentSearchItem extends StatelessWidget {
   final String text;
-  final Function() onTapDelete;
+  final VoidCallback onTapDelete;
+  final VoidCallback? onTap;
 
   const RecentSearchItem({
     super.key,
     required this.text,
     required this.onTapDelete,
+    this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => InkWell(
+      borderRadius: BorderRadius.circular(30),
+      onTap: onTap, // 👈 triggers search when chip tapped
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(color: IFColors.BLACK_LIGHTER),
@@ -31,10 +36,12 @@ class RecentSearchItem extends StatelessWidget {
               direction: IFSpaceDirection.HORIZONTAL,
             ),
             InkWell(
+              borderRadius: BorderRadius.circular(20),
               onTap: onTapDelete,
               child: SvgPicture.asset(IFIcons.cross),
-            )
+            ),
           ],
         ),
-      );
+      ),
+    );
 }

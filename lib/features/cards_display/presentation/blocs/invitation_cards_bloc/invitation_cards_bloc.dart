@@ -13,7 +13,7 @@ part 'invitation_cards_state.dart';
 @injectable
 class InvitationCardsBloc
     extends Bloc<InvitationCardsEvent, InvitationCardsState> {
-  final InvitationCardsUseCase invitationCardsUseCase;
+  final  invitationCardsUseCase;//InvitationCardsUseCase
 
   InvitationCardsBloc({required this.invitationCardsUseCase})
       : super(InvitationCardsInitial()) {

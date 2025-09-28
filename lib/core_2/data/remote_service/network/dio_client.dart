@@ -14,7 +14,7 @@ String setContentType() => "application/json";
 
 class DioClient {
   static const String _baseUrl =
-      'https://dev.inviteflare.com/api/';
+      'https://dev.inviteflare.com/'; // 🔗 Define here
 
   final Dio _dio;
 
