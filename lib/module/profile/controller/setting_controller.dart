@@ -54,7 +54,7 @@ class SettingsController extends GetxController {
         'session_logout': 1,
       };
       await dioClient
-          .put('api/v1/user/change-password', skipAuth: false, data: request)
+          .put('v1/user/change-password', skipAuth: false, data: request)
           .then((value) async {
         if (value != null) {
           await TokenService().deleteAccessToken();
@@ -83,7 +83,7 @@ class SettingsController extends GetxController {
         'email': emailTextController.text,
       };
       await dioClient
-          .post('api/v1/user/account/delete', skipAuth: false, data: request)
+          .post('v1/user/account/delete', skipAuth: false, data: request)
           .then((value) async {
         if (value != null) {
           await TokenService().deleteAccessToken();

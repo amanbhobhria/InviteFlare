@@ -30,7 +30,14 @@ class SearchPageController extends GetxController {
 
 
   Future<void> searchCategory(String query) async {
-    if (query.isEmpty) return;
+
+
+    if (query.isEmpty) {
+      searchResponse = null; // 👈 clear previous results
+      update();
+      return;
+    }
+
 
     try {
       isLoading = true.obs;
@@ -38,7 +45,7 @@ class SearchPageController extends GetxController {
 
       DioClient dioClient = DioClient(Dio());
       await dioClient
-          .get('apiv1/search', skipAuth: false, queryParameters: {"q": query})
+          .get('v1/search', skipAuth: false, queryParameters: {"q": query})
           .then((value) {
         if (value != null) {
           searchResponse = SearchCategoryResponseModel.fromJson(value);

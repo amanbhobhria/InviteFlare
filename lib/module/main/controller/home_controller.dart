@@ -125,7 +125,7 @@ Fill their inbox with cheer with Christmas cards you can email, text, or share''
     try {
       isCategoryLoading.value = true;
       await DioClient(Dio())
-          .get('api/v1/invitations/mob/categories', skipAuth: false)
+          .get('v1/invitations/mob/categories', skipAuth: false)
           .then(
         (value) {
           if (value != null) {

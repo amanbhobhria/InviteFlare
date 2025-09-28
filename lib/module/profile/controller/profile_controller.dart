@@ -51,7 +51,7 @@ class ProfileController extends GetxController {
     try {
       DioClient dioClient = DioClient(Dio()); // ✅ No need to pass baseUrl
 
-      await dioClient.get('api/v1/user', skipAuth: false).then((value) {
+      await dioClient.get('v1/user', skipAuth: false).then((value) {
         if (value != null) {
           profileResponseModel = ProfileResponseModel.fromJson(value);
           setData();
@@ -78,7 +78,7 @@ class ProfileController extends GetxController {
         'two_factor': isTwoFactorEnabled ? 1 : 0,
       };
       await dioClient
-          .put('api/v1/user/update', skipAuth: false, data: request)
+          .put('v1/user/update', skipAuth: false, data: request)
           .then((value) {
         if (value != null) {
           profileResponseModel = ProfileResponseModel.fromJson(value);
