@@ -8,6 +8,7 @@
  */
 
 import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
+import 'package:invite_flare/module/card/views/card_detail_screen.dart';
 import 'package:invite_flare/module/profile/binding/profile_binding.dart';
 import 'package:invite_flare/module/profile/views/profile_screen.dart';
 import 'package:invite_flare/module/profile/views/setting_screen.dart';
@@ -29,11 +30,15 @@ class AppPages {
       name: AppRoutes.profileScreen,
       page: () => ProfileScreen(),
       bindings: [ProfileBinding()],
-    ),   
-     GetPage(
+    ),
+    GetPage(
       name: AppRoutes.settingScreen,
       page: () => SettingScreen(),
       bindings: [ProfileBinding()],
+    ),
+    GetPage(
+      name: AppRoutes.cardDetailScreen,
+      page: () => CardDetailScreen(),
     ),
   ];
 }

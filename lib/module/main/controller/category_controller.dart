@@ -1,13 +1,14 @@
-import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
-import 'package:invite_flare/module/main/widget/use_cases/categories_use_case.dart';
-import 'package:invite_flare/core/base/base.dart';
+import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
+import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
+import 'package:invite_flare/export.dart';
+import 'package:invite_flare/module/main/model/categories_response_model.dart';
 import 'package:invite_flare/shared/domain/entities/category_entity.dart';
 
 @injectable
 class CategoriesController extends GetxController {
-
-
+  List<CateroiesResponseModel> cateroiesResponseModel = [];
+  var isCategoryLoading = false.obs;
   var isLoading = false.obs;
   var categories = <CategoryEntity>[
     CategoryEntity.fromJson({
@@ -45,10 +46,47 @@ class CategoriesController extends GetxController {
       'icon_xs':
           'https://paperpost-ce6b5.web.app/assets/images/home-category/new-year.svg',
     }),
-  ].obs; // <-- RxList<CategoryEntity>
+  ].obs;
 
   @override
   void onInit() {
     super.onInit();
+  }
+
+  Future<void> fetchCategories() async {
+    try {
+      isCategoryLoading.value = true;
+      await DioClient(Dio())
+          .get('api/v1/invitations/mob/categories', skipAuth: false)
+          .then(
+        (value) {
+          if (value != null) {
+            if (value is List) {
+              cateroiesResponseModel.clear(); // old data hatane ke liye
+              cateroiesResponseModel.addAll(
+                value.map((e) => CateroiesResponseModel.fromJson(e)).toList(),
+              );
+            }
+            print(
+                'Cateriiiiiiiiiiiiiiii--------------${cateroiesResponseModel.length}');
+            update();
+          }
+        },
+      ).onError(
+        (error, stackTrace) {
+          print('Error---$error');
+          print('Error---$stackTrace');
+          NetworkExceptions.getDioException(error);
+        },
+      );
+    } finally {
+      isCategoryLoading.value = false;
+    }
+  }
+
+  @override
+  void onReady() {
+    fetchCategories();
+    super.onReady();
   }
 }

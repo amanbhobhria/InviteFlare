@@ -2,11 +2,11 @@ import 'package:if_loop_components/if_loop_components.dart';
 import 'package:invite_flare/core/mock/mock_data.dart';
 import 'package:invite_flare/export.dart';
 import 'package:invite_flare/features/card_customize/card_customize_screen.dart';
+import 'package:invite_flare/module/card/controller/card_detail_controller.dart';
 import 'package:invite_flare/shared/presentation/widgets/app_bar_view/app_bar_view.dart';
 
 class CardDetailScreen extends StatelessWidget {
-  const CardDetailScreen({super.key});
-
+  final controller = CardDetailController();
   @override
   // ignore: prefer_expression_function_bodies
   Widget build(BuildContext context) {

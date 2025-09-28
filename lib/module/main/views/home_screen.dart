@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:invite_flare/core/utilities/utilities.dart';
+import 'package:invite_flare/core_2/routes/app_routes.dart';
 import 'package:invite_flare/module/card/views/card_detail_screen.dart';
 import 'package:invite_flare/module/main/controller/home_controller.dart';
 import 'package:invite_flare/module/main/model/categories_response_model.dart';
@@ -42,8 +43,6 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Categories
             Obx(() {
-              print(
-                  'homeController.cateroiesResponseModel?.length==========${homeController.cateroiesResponseModel?.length}');
               if (homeController.isCategoryLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -57,23 +56,18 @@ class HomeScreen extends StatelessWidget {
                     (index) {
                       CateroiesResponseModel category =
                           homeController.cateroiesResponseModel[index];
-                      return InkWell(
-                        splashColor: Colors.transparent,
-                        onTap: () {
-                          print('Category Tapped');
-                          Get.to(() => CardDetailScreen());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: CategoryTile(
-                            name: category.title ?? '',
-                            icon: category.slug ?? '',
-                            cardColor: Utilities.colorFromHex(
-                                category.bgColor ?? '#fbf6ee'),
-                            onTap: () {
-                              // Navigate to details if needed
-                            },
-                          ),
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: CategoryTile(
+                          name: category.title ?? '',
+                          icon: category.slug ?? '',
+                          cardColor: Utilities.colorFromHex(
+                              category.bgColor ?? '#fbf6ee'),
+                          onTap: () {
+                            debugPrint('Category Tapped');
+                            // Get.to(() => CardDetailScreen());
+                            Get.toNamed(AppRoutes.cardDetailScreen);
+                          },
                         ),
                       );
                     },

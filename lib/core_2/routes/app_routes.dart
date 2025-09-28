@@ -10,6 +10,7 @@
 
 abstract class AppRoutes {
   static const splash = '/splash';
+  static const cardDetailScreen = '/cardDetailScreen';
   static const profileScreen = '/profileScreen';
   static const settingScreen = '/settingScreen';
 

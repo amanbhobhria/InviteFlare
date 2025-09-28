@@ -13,7 +13,5 @@ class CardDetailsPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => CardDetailsWrapper(
-        card: card,
-      );
+  Widget build(BuildContext context) => CardDetailsWrapper(card: card, );
 }
