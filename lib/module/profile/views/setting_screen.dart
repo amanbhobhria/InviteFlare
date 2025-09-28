@@ -93,7 +93,7 @@ class SettingScreen extends StatelessWidget {
                     title: const Text("Remove all sessions"),
                     subtitle: const Text("Logout from all devices"),
                     value: controller.removeAllSessions.value,
-                    activeThumbColor: Colors.blue,
+                    // activeThumbColor: Colors.blue,
                     trackColor: MaterialStateProperty.resolveWith<Color?>(
                       (states) {
                         if (states.contains(MaterialState.selected)) {

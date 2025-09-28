@@ -70,7 +70,7 @@ class LoginController extends GetxController {
       };
 
       await dioClient
-          .post('api/v1/auth/login', skipAuth: true, data: request)
+          .post('v1/auth/login', skipAuth: true, data: request)
           .then((value) async {
         if (value != null) {
           final tokenService = TokenService();

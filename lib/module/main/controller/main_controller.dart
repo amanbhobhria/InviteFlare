@@ -10,8 +10,8 @@ class MainController extends GetxController {
   void updatePage(int index) {
     pageNo = index;
     if (pageNo == 0) {
-      Get.put(
-          HomeController()); // Clear search text or any other state if needed
+      Get.put(HomeController())
+          .onInit(); // Clear search text or any other state if needed
     }
   }
 }

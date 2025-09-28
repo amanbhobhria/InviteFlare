@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:invite_flare/core/utilities/utilities.dart';
-import 'package:invite_flare/core_2/core/widgets/custom_appbar.dart';
-import 'package:invite_flare/core/utilities/utilities.dart';
-import 'package:invite_flare/module/card/controller/category_detail_controller.dart';
+
+import 'package:invite_flare/module/card/card/controller/category_detail_controller.dart';
 import 'package:invite_flare/shared/presentation/widgets/category_view/category_tile.dart';
 
 class CategoryDetailScreen extends StatelessWidget {
@@ -24,12 +23,10 @@ class CategoryDetailScreen extends StatelessWidget {
                   onTap: () {
                     Get.back();
                   },
-                  // ignore: prefer_const_constructors
                   child: Icon(
                     Icons.arrow_back,
                     color: Colors.black,
                   )),
-              // ignore: prefer_const_constructors
               title: Text('Category Detail'),
             ),
             body: Column(
@@ -37,21 +34,17 @@ class CategoryDetailScreen extends StatelessWidget {
                 Obx(
                   () => Expanded(
                     child: GridView.builder(
-                      // ignore: prefer_const_constructors
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3),
                       itemCount: controller.categoryList.length,
-                      // ignore: prefer_expression_function_bodies
-                      itemBuilder: (context, index) {
-                        return CategoryTile(
+                      itemBuilder: (context, index) => CategoryTile(
                           name: controller.categoryList[index].title ?? "",
                           icon: controller.categoryList[index].slug ?? "",
                           cardColor: Utilities.colorFromHex(
                               controller.categoryList[index].bgColor ??
                                   '#9AD9F6'),
                           onTap: () {},
-                        );
-                      },
+                        ),
                     ),
                   ),
                 )

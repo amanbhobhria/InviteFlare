@@ -72,7 +72,7 @@ class SideNav extends StatelessWidget {
                         DioClient(Dio()); // ✅ No need to pass baseUrl
 
                     await dioClient
-                        .post('api/v1/accounts/logout', skipAuth: false)
+                        .post('v1/accounts/logout', skipAuth: false)
                         .then((value) async {
                       if (value != null) {
                         await TokenService().deleteAccessToken();

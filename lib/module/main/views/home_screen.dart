@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:invite_flare/core/utilities/utilities.dart';
 import 'package:invite_flare/core_2/routes/app_routes.dart';
-import 'package:invite_flare/module/card/views/card_detail_screen.dart';
 import 'package:invite_flare/module/main/controller/home_controller.dart';
 import 'package:invite_flare/module/main/model/categories_response_model.dart';
 import 'package:invite_flare/module/main/side_bar/side_nav.dart';

@@ -16,35 +16,35 @@ class CategoriesController extends GetxController {
       'slug': 'birthday',
       'bg_color': '#F2F2FF',
       'icon_xs':
-          'https://paperpost-ce6b5.web.app/assets/images/home-category/birthday.svg',
+      'https://paperpost-ce6b5.web.app/assets/images/home-category/birthday.svg',
     }),
     CategoryEntity.fromJson({
       'title': 'Wedding',
       'slug': 'wedding',
       'bg_color': '#FFF6F7',
       'icon_xs':
-          'https://paperpost-ce6b5.web.app/assets/images/home-category/wedding.svg',
+      'https://paperpost-ce6b5.web.app/assets/images/home-category/wedding.svg',
     }),
     CategoryEntity.fromJson({
       'title': 'Baby Shower',
       'slug': 'baby-shower',
       'bg_color': '#F1F7FF',
       'icon_xs':
-          'https://paperpost-ce6b5.web.app/assets/images/home-category/baby-shower.svg',
+      'https://paperpost-ce6b5.web.app/assets/images/home-category/baby-shower.svg',
     }),
     CategoryEntity.fromJson({
       'title': 'Graduation',
       'slug': 'graduation',
       'bg_color': '#ECFFF7',
       'icon_xs':
-          'https://paperpost-ce6b5.web.app/assets/images/home-category/graduation.svg',
+      'https://paperpost-ce6b5.web.app/assets/images/home-category/graduation.svg',
     }),
     CategoryEntity.fromJson({
       'title': 'New Year',
       'slug': 'new-year',
       'bg_color': '#FFF9F0',
       'icon_xs':
-          'https://paperpost-ce6b5.web.app/assets/images/home-category/new-year.svg',
+      'https://paperpost-ce6b5.web.app/assets/images/home-category/new-year.svg',
     }),
   ].obs;
 
@@ -53,13 +53,15 @@ class CategoriesController extends GetxController {
     super.onInit();
   }
 
+
+
   Future<void> fetchCategories() async {
     try {
       isCategoryLoading.value = true;
       await DioClient(Dio())
-          .get('api/v1/invitations/mob/categories', skipAuth: false)
+          .get('v1/invitations/mob/categories', skipAuth: false)
           .then(
-        (value) {
+            (value) {
           if (value != null) {
             if (value is List) {
               cateroiesResponseModel.clear(); // old data hatane ke liye
@@ -73,7 +75,7 @@ class CategoriesController extends GetxController {
           }
         },
       ).onError(
-        (error, stackTrace) {
+            (error, stackTrace) {
           print('Error---$error');
           print('Error---$stackTrace');
           NetworkExceptions.getDioException(error);
@@ -83,7 +85,6 @@ class CategoriesController extends GetxController {
       isCategoryLoading.value = false;
     }
   }
-
   @override
   void onReady() {
     fetchCategories();

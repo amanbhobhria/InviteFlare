@@ -35,11 +35,16 @@ class CategoryTile extends BaseStatelessWidget {
               const IFSpace(
                 space: IFSpaces.xxS,
               ),
-              IFText(
-                text: name,
-                textSize: IFTextSize.S,
-                textWeight: IFTextWeight.semiBold,
-              ),
+              Flexible(
+                child: IFText(
+                  text: name,
+                  textSize: IFTextSize.S,
+                  textWeight: IFTextWeight.semiBold,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  textOverflow: TextOverflow.ellipsis,
+                ),
+              )
             ],
           ),
         ),
