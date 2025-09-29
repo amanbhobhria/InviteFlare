@@ -125,6 +125,7 @@ class SearchScreen extends StatelessWidget {
                 );
               }),
             ),
+         
           ],
         ),
       ),

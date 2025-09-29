@@ -39,17 +39,12 @@ class CategoryTile extends BaseStatelessWidget {
                 child: IFText(
                   text: name,
                   textSize: IFTextSize.S,
-<<<<<<< Updated upstream
                   textWeight: IFTextWeight.semiBold,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   textOverflow: TextOverflow.ellipsis,
-=======
-                  textOverflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  textWeight: IFTextWeight.semiBold,
-                  textAlign: TextAlign.center,
->>>>>>> Stashed changes
+              
+
                 ),
               )
             ],

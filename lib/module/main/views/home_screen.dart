@@ -4,6 +4,7 @@ import 'package:invite_flare/core/utilities/utilities.dart';
 import 'package:invite_flare/core_2/routes/app_routes.dart';
 import 'package:invite_flare/module/main/controller/home_controller.dart';
 import 'package:invite_flare/module/main/model/categories_response_model.dart';
+import 'package:invite_flare/module/main/model/category_data_response_model.dart';
 import 'package:invite_flare/module/main/side_bar/side_nav.dart';
 import 'package:invite_flare/module/main/widget/home_widget/category_tiles_row_widget.dart';
 import 'package:invite_flare/module/main/widget/home_widget/expandable_card_view.dart';
@@ -53,15 +54,14 @@ class HomeScreen extends StatelessWidget {
                   children: List.generate(
                     homeController.cateroiesResponseModel?.length ?? 0,
                     (index) {
-                      CateroiesResponseModel category =
+                      CategoriesData category =
                           homeController.cateroiesResponseModel[index];
                       return Padding(
                         padding: const EdgeInsets.only(right: 12),
                         child: CategoryTile(
                           name: category.title ?? '',
                           icon: category.slug ?? '',
-                          cardColor: Utilities.colorFromHex(
-                              category.bgColor ?? '#fbf6ee'),
+                          cardColor: Utilities.colorFromHex('#fbf6ee'),
                           onTap: () {
                             debugPrint('Category Tapped');
                             // Get.to(() => CardDetailScreen());

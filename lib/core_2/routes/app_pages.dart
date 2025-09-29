@@ -8,7 +8,10 @@
  */
 
 import 'package:invite_flare/features/profile/presentation/pages/settings_page.dart';
+import 'package:invite_flare/module/card/card/binding/card_binding.dart';
 import 'package:invite_flare/module/card/card/views/card_detail_screen.dart';
+import 'package:invite_flare/module/card/card/views/card_list_screen.dart';
+import 'package:invite_flare/module/card/card/views/children_list_screen.dart';
 import 'package:invite_flare/module/profile/binding/profile_binding.dart';
 import 'package:invite_flare/module/profile/views/profile_screen.dart';
 import 'package:invite_flare/module/profile/views/setting_screen.dart';
@@ -39,6 +42,16 @@ class AppPages {
     GetPage(
       name: AppRoutes.cardDetailScreen,
       page: () => CardDetailScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.childrenListScreen,
+      page: () => ChildrenListScreen(),
+      bindings: [CardBinding()],
+    ),
+    GetPage(
+      name: AppRoutes.cardListScreen,
+      page: () => CardListScreen(),
+      bindings: [CardBinding()],
     ),
   ];
 }

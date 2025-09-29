@@ -1,29 +1,43 @@
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
 import 'package:invite_flare/export.dart';
+import 'package:invite_flare/module/card/model/card_list_response_model.dart';
 
-class CardDetailController extends GetxController {
-  var id;
+class CardListController extends GetxController {
+  var slug;
+  CardListResponseModel cardListResponseModel = CardListResponseModel();
+  RxList<CardsListData> cardsListData = <CardsListData>[].obs;
   RxBool isLoading = true.obs;
-  onInit() {
+  @override
+  void onInit() {
     getArgument();
     super.onInit();
   }
 
   getArgument() {
     if (Get.arguments != null) {
-      id = Get.arguments['id'] ?? "";
+      slug = Get.arguments['slug'] ?? "";
+      print('object-------${Get.arguments}');
     }
   }
 
-  callCardDetailApi() async {
+  @override
+  void onReady() {
+    callGetCArdList();
+    super.onReady();
+  }
+
+  callGetCArdList() async {
     try {
       isLoading.value = true;
       await DioClient(Dio())
-          .get('v1/invitations/category/card/display/$id', skipAuth: false)
+          .get('v1/invitations/category/cards/$slug', skipAuth: false)
           .then(
         (value) {
           if (value != null) {
+            cardListResponseModel = CardListResponseModel.fromJson(value);
+            cardsListData.value.addAll(cardListResponseModel.cards ?? []);
+
             update();
           }
         },
@@ -37,11 +51,5 @@ class CardDetailController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void onReady() {
-    callCardDetailApi();
-    super.onReady();
   }
 }
