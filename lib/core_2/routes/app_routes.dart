@@ -13,6 +13,8 @@ abstract class AppRoutes {
   static const cardDetailScreen = '/cardDetailScreen';
   static const profileScreen = '/profileScreen';
   static const settingScreen = '/settingScreen';
+  static const childrenListScreen = '/childrenListScreen';
+  static const cardListScreen = '/cardListScreen';
 
 
 

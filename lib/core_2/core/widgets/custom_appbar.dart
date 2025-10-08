@@ -9,8 +9,6 @@
  *
  */
 
-
-
 import 'package:invite_flare/core_2/core/values/app_assets.dart';
 import 'package:invite_flare/core_2/core/values/app_strings.dart';
 import 'package:invite_flare/core_2/core/values/dimens.dart';
@@ -50,7 +48,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0.0,
       bottomOpacity: 0.0,
-      leading: isBackIcon! ? _backIcon() : Container(),
+      leading: isBackIcon!
+          ? InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ))
+          : Container(),
       centerTitle: true,
       surfaceTintColor: Colors.transparent,
       title: appBarTitleWidget ??

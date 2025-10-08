@@ -18,7 +18,7 @@ class CategoryTile extends BaseStatelessWidget {
   @override
   Widget buildWidget(BuildContext context) => SizedBox(
         child: IFCard(
-          height: 120,
+          height: 130,
           width: 120,
           onTap: onTap,
           borderRadius: BorderRadius.circular(15),
@@ -35,11 +35,18 @@ class CategoryTile extends BaseStatelessWidget {
               const IFSpace(
                 space: IFSpaces.xxS,
               ),
-              IFText(
-                text: name,
-                textSize: IFTextSize.S,
-                textWeight: IFTextWeight.semiBold,
-              ),
+              Flexible(
+                child: IFText(
+                  text: name,
+                  textSize: IFTextSize.S,
+                  textWeight: IFTextWeight.semiBold,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  textOverflow: TextOverflow.ellipsis,
+              
+
+                ),
+              )
             ],
           ),
         ),

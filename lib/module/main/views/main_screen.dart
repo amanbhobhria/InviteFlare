@@ -16,10 +16,14 @@ class MainScreen extends StatelessWidget {
     final controller = Get.put(MainController());
 
     return Obx(() => MainView(
-          controller.pageNo,
-          controller.updatePage,
-          _getPage(pageNo: controller.pageNo),
-        ));
+      controller.pageNo,
+      controller.updatePage,
+      // Wrap page with padding for bottom nav
+      Padding(
+        padding: const EdgeInsets.only(bottom: 70.0), // space for bottom nav
+        child: _getPage(pageNo: controller.pageNo),
+      ),
+    ));
   }
 
   Widget _getPage({required int pageNo}) {
