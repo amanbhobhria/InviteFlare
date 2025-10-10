@@ -21,7 +21,7 @@ class CategoryDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 1,
         centerTitle: true,
         leading: InkWell(
