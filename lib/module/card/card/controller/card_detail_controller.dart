@@ -42,24 +42,8 @@ class CardDetailController extends GetxController {
             cardData.value =cardDetailResponseModel.card;
             relatedCards.value =cardDetailResponseModel.relatedCards??[];
             breadcrumbs.value =cardDetailResponseModel.breadcrumbs??[];
-
-            // ✅ Debug prints to check parsing
-            print("=== Card Detail API Response Parsed ===");
-            print("Card Title: ${cardData.value?.title}");
-            print("Card Slug: ${cardData.value?.slug}");
-            print("Related Cards: ${relatedCards.map((r) => r.title).toList()}");
-            print("Full Model: ${cardDetailResponseModel.toJson()}");
-
-
-
-
-
-
-            update();
+             update();
           }
-
-
-
 
         },
       ).onError(

@@ -29,24 +29,6 @@ class CardDetailScreen extends StatelessWidget {
       // ),
     ),
 
-
-
-    //
-    // appBar: AppBar(
-    //
-    //   title: const Text('Card Detail'),
-    //   leading: IconButton(
-    //     icon: const Icon(Icons.arrow_back),
-    //     onPressed: () {
-    //       // Use Get.back() to handle the back action
-    //       Get.back();
-    //     },
-    //   ),
-    // ),
-    //
-
-
-      // appBar: const AppBarView.other(pageTitle: '',),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -131,13 +113,19 @@ class CardDetailScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CardCustomizePage(card.id ?? ''),
-                      ),
+
+                    Get.toNamed(
+                      AppRoutes.customizeScreen,arguments: {'cardId': card.id ?? ''},
                     );
+
+
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         CardCustomizePage(card.id ?? ''),
+                    //   ),
+                    // );
                   },
                   icon: const Icon(Icons.color_lens, color: Colors.white),
                   label: const Text(
@@ -232,7 +220,7 @@ class CardDetailScreen extends StatelessWidget {
       }),
     );
 
-  /// helper for features row
+
   Widget _buildFeature(String text) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Row(

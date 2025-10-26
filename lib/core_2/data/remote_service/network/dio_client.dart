@@ -172,4 +172,49 @@ class DioClient {
       rethrow;
     }
   }
+  Future<dynamic> patch(
+      String uri, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
+        bool skipAuth = false,
+      }) async {
+    try {
+      if (!skipAuth) {
+        var token = await TokenService().getAccessToken();
+        debugPrint("Authorization token: $token");
+
+        if (token != null) {
+          options ??= Options();
+          options.headers = {
+            ...?options.headers,
+            "Authorization": "Bearer $token",
+          };
+        }
+      }
+
+      var response = await _dio.patch(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+
+      return response.data;
+    } on FormatException {
+      throw FormatException("Unable to process the data");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+
+
 }

@@ -14,14 +14,15 @@ import 'package:invite_flare/core_2/core/values/app_colors.dart';
 import '../../../export.dart';
 
 toast(message, {int seconds = 1}) => Get.snackbar(
-      'Rizewell',
+      'InviteFlare',
       '$message',
       borderRadius: 6.0,
       snackPosition: SnackPosition.BOTTOM,
       animationDuration: Duration(seconds: seconds),
-      backgroundColor: colorAppGradient1,
+      backgroundColor: Colors.white,
+      // backgroundColor: colorAppGradient1,
       margin: EdgeInsets.zero,
-      colorText: colorVioletM,
+      colorText: appColor,
       duration: Duration(milliseconds: 1900),
       backgroundGradient: const LinearGradient(colors: [colorAppGradient1, colorAppGradient2]),
     );

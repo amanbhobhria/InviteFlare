@@ -11,7 +11,9 @@ import 'package:flutter/material.dart';
 
 const Color colorAppGradient1 = Color(0xFF917AFD);
 const Color colorAppGradient2 = Color(0xFF6246EA);
-const Color appColor = Color(0xFFFF9E2D);
+// const Color appColor = Color(0xFFFF9E2D);
+const Color appColor = Color(0xff0D2B1B);
+
 const Color secondAppColor = Color(0xFF1881B1);
 const Color secondAppLightColor = Color(0xFF9AD9F6);
 const Color colorAppWhiteGradient = Color.fromARGB(255, 250, 250, 252);

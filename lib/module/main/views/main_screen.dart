@@ -12,17 +12,12 @@ import 'package:invite_flare/module/profile/views/setting_screen.dart';
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Register controller
     final controller = Get.put(MainController());
 
     return Obx(() => MainView(
       controller.pageNo,
       controller.updatePage,
-      // Wrap page with padding for bottom nav
-      Padding(
-        padding: const EdgeInsets.only(bottom: 70.0), // space for bottom nav
-        child: _getPage(pageNo: controller.pageNo),
-      ),
+      _getPage(pageNo: controller.pageNo),
     ));
   }
 
@@ -41,3 +36,7 @@ class MainScreen extends StatelessWidget {
     }
   }
 }
+
+
+
+
