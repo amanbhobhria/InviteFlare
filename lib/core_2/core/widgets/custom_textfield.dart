@@ -7,7 +7,6 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
-
 import 'package:invite_flare/core_2/core/values/app_colors.dart';
 import 'package:invite_flare/core_2/core/values/app_strings.dart';
 import 'package:invite_flare/core_2/core/values/dimens.dart';
@@ -147,7 +146,7 @@ class TextFieldWidget extends StatelessWidget {
         prefixIconConstraints: boxConstraints,
         filled: true,
         contentPadding: contentPadding ??
-            EdgeInsets.only(left: margin_30, top: margin_20, bottom: margin_20),
+            EdgeInsets.only(left: margin_10, top: margin_20, bottom: margin_20),
         prefixIcon: prefixIcon,
         suffixIcon: isOutined == true ? null : suffixIcon,
         hintText: hint,
@@ -247,6 +246,4 @@ class DecoratedInputBorder extends InputBorder {
         other.child == child &&
         other.shadow == shadow;
   }
-
-
 }

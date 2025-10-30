@@ -15,35 +15,7 @@ abstract class AppRoutes {
   static const settingScreen = '/settingScreen';
   static const childrenListScreen = '/childrenListScreen';
   static const cardListScreen = '/cardListScreen';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  static const shareWithRsvpScreen = '/shareWithRsvpScreen';
 
 
 

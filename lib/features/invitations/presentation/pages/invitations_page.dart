@@ -36,7 +36,7 @@ class InvitationsPage extends StatelessWidget {
                     );
                   },
                   child: const Text(
-                    "New Invitation",
+                    "Neharew Invitation",
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

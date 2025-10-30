@@ -13,6 +13,7 @@ import 'package:invite_flare/module/card/card/views/card_detail_screen.dart';
 import 'package:invite_flare/module/card/card/views/card_list_screen.dart';
 import 'package:invite_flare/module/card/card/views/children_list_screen.dart';
 import 'package:invite_flare/module/card/card/views/customize_screen.dart';
+import 'package:invite_flare/module/card/card/views/share_with_rsvp_screen.dart';
 import 'package:invite_flare/module/profile/binding/profile_binding.dart';
 import 'package:invite_flare/module/profile/views/profile_screen.dart';
 import 'package:invite_flare/module/profile/views/setting_screen.dart';
@@ -40,6 +41,15 @@ class AppPages {
       page: () => SettingScreen(),
       bindings: [ProfileBinding()],
     ),
+
+    GetPage(
+      name: AppRoutes.shareWithRsvpScreen,
+      page: () => ShareWithRsvpScreen(),
+      bindings: [CardBinding()],
+    ),
+
+
+
     GetPage(
       name: AppRoutes.customizeScreen,
       page: () => CustomizeScreen(),

@@ -68,6 +68,27 @@ class CustomizeController extends GetxController {
   }
 
 
+  Future<void> shareWithoutRSVP() async {
+    try {
+      isLoading.value = true;
+
+      final response = await DioClient(Dio())
+          .get('v1/invitations/cards/display/$cardId', skipAuth: false);
+
+      if (response != null) {
+        print("shareWithoutRSVP api response  = ${response}");
+
+      }
+    } catch (e, st) {
+      dev.log('❌shareWithoutRSVP API error: $e\n$st');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+
+
   Future<void> callCustomizeCardApi(cardId) async {
     try {
       isLoading.value = true;
