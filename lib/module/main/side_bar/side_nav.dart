@@ -69,7 +69,7 @@ class SideNav extends StatelessWidget {
                 onTap: () async {
                   try {
                     DioClient dioClient =
-                        DioClient(Dio()); // ✅ No need to pass baseUrl
+                        DioClient(Dio());
 
                     await dioClient
                         .post('v1/accounts/logout', skipAuth: false)
@@ -82,9 +82,13 @@ class SideNav extends StatelessWidget {
                               builder: (context) => LoginScreen()),
                           (Route<dynamic> route) => false,
                         );
+                        storage.remove(LOCALKEY_token);
+
                       }
                     }).onError(
                       (error, stackTrace) {
+
+                        storage.remove(LOCALKEY_token);
                         NetworkExceptions.getDioException(error);
                         toast(NetworkExceptions.messageData);
                       },

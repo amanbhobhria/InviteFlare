@@ -33,8 +33,11 @@ class ShareWithRsvpScreen extends StatelessWidget {
     );
   }
 
+
   Widget _buildGiftSection() {
-    final giftController = TextEditingController();
+    final giftNameController = TextEditingController();
+    final giftUrlController = TextEditingController();
+
     return Obx(() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,10 +46,10 @@ class ShareWithRsvpScreen extends StatelessWidget {
             spacing: 8,
             children: controller.gifts
                 .map((gift) => Chip(
-                      label: Text(gift),
-                      onDeleted: () => controller.removeGift(gift),
-                      deleteIcon: const Icon(Icons.close, size: 18),
-                    ))
+              label: Text("${gift['title']}"),
+              onDeleted: () => controller.removeGift(gift),
+              deleteIcon: const Icon(Icons.close, size: 18),
+            ))
                 .toList(),
           ),
           const SizedBox(height: 10),
@@ -54,17 +57,25 @@ class ShareWithRsvpScreen extends StatelessWidget {
             onPressed: () {
               Get.defaultDialog(
                 title: "Add Gift",
-                content: TextField(
-                  controller: giftController,
-                  decoration: const InputDecoration(
-                    labelText: "Gift Name",
-                  ),
+                content: Column(
+                  children: [
+                    TextField(
+                      controller: giftNameController,
+                      decoration: const InputDecoration(labelText: "Gift Name"),
+                    ),
+                    TextField(
+                      controller: giftUrlController,
+                      decoration: const InputDecoration(labelText: "Gift URL"),
+                    ),
+                  ],
                 ),
                 textConfirm: "Add",
                 textCancel: "Cancel",
                 onConfirm: () {
-                  controller.addGift(giftController.text);
-                  giftController.clear();
+                  controller.addGift(
+                      giftNameController.text, giftUrlController.text);
+                  giftNameController.clear();
+                  giftUrlController.clear();
                   Get.back();
                 },
               );
@@ -76,6 +87,55 @@ class ShareWithRsvpScreen extends StatelessWidget {
       );
     });
   }
+
+
+
+
+
+
+  // Widget _buildGiftSection() {
+  //   final giftController = TextEditingController();
+  //   return Obx(() {
+  //     return Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Wrap(
+  //           spacing: 8,
+  //           children: controller.gifts
+  //               .map((gift) => Chip(
+  //                     label: Text(gift),
+  //                     onDeleted: () => controller.removeGift(gift),
+  //                     deleteIcon: const Icon(Icons.close, size: 18),
+  //                   ))
+  //               .toList(),
+  //         ),
+  //         const SizedBox(height: 10),
+  //         OutlinedButton.icon(
+  //           onPressed: () {
+  //             Get.defaultDialog(
+  //               title: "Add Gift",
+  //               content: TextField(
+  //                 controller: giftController,
+  //                 decoration: const InputDecoration(
+  //                   labelText: "Gift Name",
+  //                 ),
+  //               ),
+  //               textConfirm: "Add",
+  //               textCancel: "Cancel",
+  //               onConfirm: () {
+  //                 controller.addGift(giftController.text);
+  //                 giftController.clear();
+  //                 Get.back();
+  //               },
+  //             );
+  //           },
+  //           icon: const Icon(Icons.add),
+  //           label: const Text("Add Gift"),
+  //         ),
+  //       ],
+  //     );
+  //   });
+  // }
 
   Widget _buildStepIndicator() {
     Widget circle(int step, bool filled) => CircleAvatar(
@@ -267,6 +327,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
             child: MaterialButtonWidget(
               onPressed: () {
                 controller.selectIndex.value = 2;
+                print("index2");
               },
               buttonText: "Next",
             ),
@@ -431,7 +492,19 @@ class ShareWithRsvpScreen extends StatelessWidget {
             Expanded(
                 child: MaterialButtonWidget(
               onPressed: () {
-                controller.selectIndex.value = 3;
+                print("index3");
+
+                if(controller.selectIndex.value==3){
+                  print("index4");
+                  controller.hitAddEventInfoApi();
+                }
+                else{
+                  controller.selectIndex.value = 3;
+                }
+
+
+
+
               },
               buttonText: "Next",
             )),

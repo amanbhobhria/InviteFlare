@@ -13,7 +13,7 @@ class LoginController extends GetxController {
   final TextEditingController emailCtrl =
       TextEditingController(text: 'gauravnarulain@gmail.com');
   final TextEditingController passwordCtrl =
-      TextEditingController(text: 'Sham@123');
+      TextEditingController(text: 'Admin@123');
   // Mock login function (replace with API call)
   Future<void> login() async {
     if (email.value.isEmpty || password.value.isEmpty) {
@@ -37,7 +37,7 @@ class LoginController extends GetxController {
       await Future.delayed(const Duration(seconds: 2)); // simulate API call
 
       if (email.value == "gauravnarulain@gmail.com" &&
-          password.value == "Sham@123") {
+          password.value == "Admin@123") {
         // Success
         Get.offAllNamed('/main'); // Navigate to MainPage
       } else {
