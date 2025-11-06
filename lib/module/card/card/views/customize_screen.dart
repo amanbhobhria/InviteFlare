@@ -81,21 +81,7 @@ class CustomizeScreen extends GetView<CustomizeController> {
           );
         }),
 
-        //
-        //
-        //
-        //
-        // floatingActionButton: Obx(
-        //       () => controller.selectedItem.value != null
-        //       ? FloatingActionButton(
-        //     onPressed: () =>
-        //         // _showTextEditor(context, controller.selectedItem.value!),
-        //         _showTextEditor(context, item),
-        //     backgroundColor: appColor,
-        //     child: const Icon(Icons.edit),
-        //   )
-        //       : const SizedBox.shrink(),
-        // ),
+
       );
   void showShareBottomSheet() {
     Get.bottomSheet(
@@ -111,10 +97,13 @@ class CustomizeScreen extends GetView<CustomizeController> {
             ListTile(
               leading: const Icon(Icons.share),
               title: const Text("Share with RSVP"),
-              onTap: () {
-                Get.toNamed(AppRoutes.shareWithRsvpScreen,arguments: {'cId':controller.cardId});
+              onTap: () async {
+               await controller.updateCustomizeCardApi2(controller.cardId);
+                // Get.toNamed(AppRoutes.shareWithRsvpScreen,arguments: {'cId':controller.cardId});
+                Get.toNamed(AppRoutes.shareWithRsvpScreen,arguments: {'cId':controller.userCid});
                 // Get.to(ShareWithRsvpScreen());
                 // controller.shareWithRSVP();
+
                 // Get.back(); // Close bottom sheet
               },
             ),
@@ -249,65 +238,3 @@ class CustomizeScreen extends GetView<CustomizeController> {
     );
   }
 }
-//
-//
-//
-//
-//
-// class CustomizeScreen extends GetView<CustomizeController> {
-//   const CustomizeScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//     appBar: AppBar(
-//       backgroundColor: Colors.white,
-//       elevation: 1,
-//       title: const Text('Customize Card'),
-//       centerTitle: true,
-//       leading: IconButton(
-//         onPressed: Get.back,
-//         icon: const Icon(Icons.arrow_back, color: Colors.black),
-//       ),
-//       actions: [
-//         IconButton(
-//           icon: const Icon(Icons.text_fields,color: appColor,),
-//           onPressed: controller.addText,
-//         ),
-//         IconButton(
-//           icon: const Icon(Icons.save,color: appColor,),
-//           onPressed: controller.saveScreenshot,
-//         ),
-//       ],
-//     ),
-//     body: Obx(() {
-//       if (controller.isLoading.value) {
-//         return const Center(child: CircularProgressIndicator());
-//       }
-//       return Center(
-//         child: RepaintBoundary(
-//           key: controller.repaintKey,
-//           child: Stack(
-//             children: [
-//               if (controller.backgroundImageURL.value.isNotEmpty)
-//                 Positioned.fill(
-//                   child: Image.network(
-//                     controller.backgroundImageURL.value,
-//                     fit: BoxFit.cover,
-//                   ),
-//                 ),
-//               ...controller.items,
-//             ],
-//           ),
-//         ),
-//       );
-//     }),
-//     floatingActionButton: Obx(() => controller.selectedItem.value != null
-//         ? FloatingActionButton(
-//       onPressed: controller.deleteSelectedItem,
-//       backgroundColor: appColor,
-//       child: const Icon(Icons.delete),
-//     )
-//         : const SizedBox.shrink()),
-//   );
-// }
-//

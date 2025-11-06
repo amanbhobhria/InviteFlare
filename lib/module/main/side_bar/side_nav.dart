@@ -89,8 +89,15 @@ class SideNav extends StatelessWidget {
                       (error, stackTrace) {
 
                         storage.remove(LOCALKEY_token);
+                        Navigator.pushAndRemoveUntil(
+                          Get.context!,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                              (Route<dynamic> route) => false,
+                        );
+
                         NetworkExceptions.getDioException(error);
-                        toast(NetworkExceptions.messageData);
+                        // toast(NetworkExceptions.messageData);
                       },
                     );
                   } catch (e) {

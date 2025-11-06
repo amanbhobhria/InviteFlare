@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_expression_function_bodies
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +8,9 @@ import 'package:invite_flare/module/profile/controller/profile_controller.dart';
 class ProfileScreen extends StatelessWidget {
   final controller = Get.put(ProfileController());
   @override
-  Widget build(BuildContext context) {
-    return GetBuilder<ProfileController>(
+  Widget build(BuildContext context) => GetBuilder<ProfileController>(
       init: controller,
-      builder: (controller) {
-        return Scaffold(
+      builder: (controller) => Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text("Profile"),
@@ -130,10 +126,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-        );
-      },
+        ),
     );
-  }
 
   Widget _buildImagePickerSheet() => SafeArea(
         child: Wrap(

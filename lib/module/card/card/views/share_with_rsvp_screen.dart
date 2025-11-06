@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_expression_function_bodies
-
+import 'package:intl/intl.dart';
 import 'package:invite_flare/core_2/core/widgets/custom_textfield.dart';
 import 'package:invite_flare/export.dart';
 import 'package:invite_flare/module/card/card/controller/share_with_rsvp_controller.dart';
@@ -8,8 +7,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
   final controller = Get.put(ShareWithRsvpController());
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
         appBarTitleText: "Please fill Details",
@@ -25,31 +23,207 @@ class ShareWithRsvpScreen extends StatelessWidget {
             Obx(
               () => controller.selectIndex.value == 1
                   ? firstWidget()
-                  : secondWidget(),
+                  : controller.selectIndex.value == 2
+                      ? secondWidget()
+                      : thirdWidget(),
             ),
           ],
         ),
       ),
     );
-  }
 
+  Column thirdWidget() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Guest Name (Optional)',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextFieldWidget(
+          textController: controller.guestNameController,
+          hint: 'e.g., John Smith',
+        ),
+        const SizedBox(height: 15),
+
+        // --- Guest Email ---
+        const Text('Guest Email',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextFieldWidget(
+          textController: controller.guestEmailController,
+          inputType: TextInputType.emailAddress,
+          hint: 'e.g., john.smith@example.com',
+        ),
+
+        // --- Email Required Error Text ---
+        Obx(() => controller.isEmailRequired.value
+            ? const Text('Email is required.',
+                style: TextStyle(color: Colors.red))
+            : Container()),
+        const SizedBox(height: 15),
+
+        // --- Bulk Upload & Add Guest Buttons ---
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedButton.icon(
+              onPressed: () => controller.bulkUploadEmails(),
+              icon: const Icon(Icons.upload, size: 18),
+              label: const Text('Bulk Upload'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.teal,
+                side: const BorderSide(color: Colors.teal),
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: controller.addSingleGuest,
+              icon: const Icon(Icons.add, size: 18, color: Colors.white),
+              label: const Text('Add Guest',
+                  style: TextStyle(color: Colors.white)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal, // Use a vibrant color like Teal
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+
+        // --- Paste Multiple Emails Area ---
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFieldWidget(
+                textController: controller.bulkEmailController,
+                maxline: 5,
+                minLine: 4,
+                hint:
+                    'Paste emails separated by commas, semicolons, or line breaks',
+              ),
+              const SizedBox(height: 5),
+              const Text(
+                'Example: alice@mail.com, bob@mail.com, charlie@mail.com',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // --- Upgrade Link ---
+        Obx(
+          () => Text.rich(
+            TextSpan(
+              text: 'Free users can add up to ',
+              style: TextStyle(color: Colors.teal.shade700, fontSize: 13),
+              children: [
+                TextSpan(
+                  text: '${30 - controller.addedGuests.length} guests',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const TextSpan(text: '. Need to invite 50+? '),
+                const TextSpan(
+                  text: 'Upgrade to Premium',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline),
+                  // Add onTap functionality here
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 30),
+
+        // --- Added Guests List ---
+        Text('Added Guests (${controller.addedGuests.length})',
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
+
+        // The list of added guests using Obx for reactive updates
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: controller.addedGuests
+              .map((email) => _buildGuestChip(email))
+              .toList(),
+        ),
+
+        const SizedBox(height: 30), // Extra space before the final buttons
+        _buildBottomNavigation(),
+        const SizedBox(height: 50), // Extra space before the final buttons
+      ],
+    );
+
+// Helper function to build the guest 'chip'
+  Widget _buildGuestChip(String email) => Chip(
+      label: Text(email, style: TextStyle(color: Colors.white, fontSize: 12)),
+      backgroundColor: Colors.grey.shade800,
+      deleteIcon: Icon(Icons.close, color: Colors.white, size: 16),
+      onDeleted: () => controller.removeGuest(email),
+      padding: EdgeInsets.zero,
+      visualDensity: VisualDensity.compact,
+    );
+
+  // Helper function for the fixed bottom navigation bar
+  Widget _buildBottomNavigation() => Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Colors.grey.shade200, width: 1)),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: OutlinedButton(
+              onPressed: () {
+                controller.selectIndex.value = 2;
+              },
+              child: Text('Back', style: TextStyle(color: Colors.teal)),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.teal),
+                padding: EdgeInsets.symmetric(vertical: 15),
+              ),
+            ),
+          ),
+          SizedBox(width: 15),
+          Expanded(
+            child: ElevatedButton(
+              onPressed: () {
+                controller.hitAddEventInfoApi();
+              },
+              child: Text('Next', style: TextStyle(color: Colors.white)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                padding: EdgeInsets.symmetric(vertical: 15),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
   Widget _buildGiftSection() {
     final giftNameController = TextEditingController();
     final giftUrlController = TextEditingController();
 
-    return Obx(() {
-      return Column(
+    return Obx(() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Wrap(
             spacing: 8,
             children: controller.gifts
                 .map((gift) => Chip(
-              label: Text("${gift['title']}"),
-              onDeleted: () => controller.removeGift(gift),
-              deleteIcon: const Icon(Icons.close, size: 18),
-            ))
+                      label: Text("${gift['title']}"),
+                      onDeleted: () => controller.removeGift(gift),
+                      deleteIcon: const Icon(Icons.close, size: 18),
+                    ))
                 .toList(),
           ),
           const SizedBox(height: 10),
@@ -84,14 +258,8 @@ class ShareWithRsvpScreen extends StatelessWidget {
             label: const Text("Add Gift"),
           ),
         ],
-      );
-    });
+      ));
   }
-
-
-
-
-
 
   // Widget _buildGiftSection() {
   //   final giftController = TextEditingController();
@@ -182,8 +350,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
     );
   }
 
-  firstWidget() {
-    return Padding(
+  firstWidget() => Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,12 +378,18 @@ class ShareWithRsvpScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
+
+
+
+
+
           // Event Date & Time
           _buildTextField(
             "Event Date & Time",
             "dd-mm-yyyy --:--",
             controller.eventDateTime,
             suffixIcon: const Icon(Icons.calendar_today),
+            isCalendar: true,
           ),
 
           const SizedBox(height: 16),
@@ -285,8 +458,8 @@ class ShareWithRsvpScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text("Add Confetti",
                       style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(width: 5),
@@ -305,9 +478,9 @@ class ShareWithRsvpScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Gift Registry
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 "Gift Registry (Optional)",
                 style: TextStyle(fontWeight: FontWeight.w600),
@@ -335,10 +508,8 @@ class ShareWithRsvpScreen extends StatelessWidget {
         ],
       ),
     );
-  }
 
-  secondWidget() {
-    return Column(
+  secondWidget() => Column(
       children: [
         const SizedBox(height: 20),
         const Text(
@@ -376,7 +547,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
                       value: controller.rsvpDeadline,
                       onTap: () => controller.pickDate(controller.rsvpDeadline),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ),
 
             const SizedBox(height: 16),
@@ -388,7 +559,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
                     value: controller.allowGuests,
                     items: const ["Yes", "No"],
                   )
-                : SizedBox()),
+                : const SizedBox()),
 
             const SizedBox(height: 16),
 
@@ -402,8 +573,8 @@ class ShareWithRsvpScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Schedule
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Text("Schedule (Optional)",
                     style: TextStyle(fontWeight: FontWeight.w600)),
                 SizedBox(width: 5),
@@ -423,8 +594,8 @@ class ShareWithRsvpScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Text("Send Reminder",
                         style: TextStyle(fontWeight: FontWeight.w600)),
                     SizedBox(width: 5),
@@ -494,17 +665,9 @@ class ShareWithRsvpScreen extends StatelessWidget {
               onPressed: () {
                 print("index3");
 
-                if(controller.selectIndex.value==3){
-                  print("index4");
-                  controller.hitAddEventInfoApi();
-                }
-                else{
-                  controller.selectIndex.value = 3;
-                }
+                print("index4");
 
-
-
-
+                controller.selectIndex.value = 3;
               },
               buttonText: "Next",
             )),
@@ -512,18 +675,76 @@ class ShareWithRsvpScreen extends StatelessWidget {
         ),
       ],
     );
+
+
+
+
+
+
+
+
+  Future<void> pickEventDateTime() async {
+    // Pick Date
+    final DateTime? pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate == null) return;
+
+    // Pick Time
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: Get.context!,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime == null) return;
+
+    // Combine date + time
+    final DateTime finalDateTime = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    // Format to API required: YYYY-MM-DD HH:MM:SS
+    final formatted =
+        "${finalDateTime.year.toString().padLeft(4, '0')}-"
+        "${finalDateTime.month.toString().padLeft(2, '0')}-"
+        "${finalDateTime.day.toString().padLeft(2, '0')} "
+        "${finalDateTime.hour.toString().padLeft(2, '0')}:"
+        "${finalDateTime.minute.toString().padLeft(2, '0')}:00";
+
+    controller.eventDateTime.text = formatted;
   }
+
+
+
+
+
+
 
   // ---------------- Widgets ----------------
   Widget _buildTextField(
       String label, String hint, TextEditingController controller,
-      {Widget? suffixIcon, int maxLines = 1, Function(String)? onChanged}) {
-    return TextFieldWidget(
+      {Widget? suffixIcon, int maxLines = 1,bool isCalendar=false, Function(String)? onChanged}) => TextFieldWidget(
       textController: controller,
+
       maxline: maxLines,
       labelText: label,
       hint: hint,
       suffixIcon: suffixIcon,
+     onTap: () => {
+        if(isCalendar==true){
+          pickEventDateTime(),
+        }
+
+
+     },
       // decoration: InputDecoration(
       //   labelText: label,
       //   hintText: hint,
@@ -533,25 +754,13 @@ class ShareWithRsvpScreen extends StatelessWidget {
       //   ),
       // ),
     );
-  }
 
-  // Widget _buildTextField(
-  //     {required String label, required Function(String) onChanged}) {
-  //   return TextField(
-  //     onChanged: onChanged,
-  //     maxLines: 3,
-  //     decoration: InputDecoration(
-  //       labelText: label,
-  //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-  //     ),
-  //   );
-  // }
+
 
   Widget _buildDropdown(
       {required String label,
       required RxString value,
-      required List<String> items}) {
-    return Column(
+      required List<String> items}) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
@@ -570,13 +779,11 @@ class ShareWithRsvpScreen extends StatelessWidget {
             )),
       ],
     );
-  }
 
   Widget _buildDatePicker(
       {required String label,
       required RxString value,
-      required VoidCallback onTap}) {
-    return Column(
+      required VoidCallback onTap}) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
@@ -589,5 +796,4 @@ class ShareWithRsvpScreen extends StatelessWidget {
             )),
       ],
     );
-  }
 }

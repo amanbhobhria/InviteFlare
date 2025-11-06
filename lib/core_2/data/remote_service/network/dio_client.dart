@@ -2,10 +2,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invite_flare/core/services/token_service.dart';
-import 'package:invite_flare/core_2/core/values/app_global_values.dart';
-import 'package:invite_flare/core_2/data/local_service/local_keys.dart';
-import 'package:invite_flare/core_2/logger/log_interceptor.dart'
-    as LogInterceptor;
+import 'package:invite_flare/core_2/logger/log_interceptor.dart' hide LogInterceptor;
+// import 'package:invite_flare/core_2/logger/log_interceptor.dart'
+//     as LogInterceptor;
 
 const _defaultConnectTimeout = Duration(seconds: 30);
 const _defaultReceiveTimeout = Duration(seconds: 30);
@@ -39,12 +38,13 @@ class DioClient {
     }
 
     if (kDebugMode) {
-      _dio.interceptors.add(LogInterceptor.LogInterceptor(
+      _dio.interceptors.add(LogInterceptor(
+        request: true,
         responseBody: true,
         error: true,
         requestHeader: true,
         responseHeader: false,
-        request: false,
+        // request: false,
         requestBody: true,
       ));
     }
@@ -185,7 +185,7 @@ class DioClient {
     try {
       if (!skipAuth) {
         var token = await TokenService().getAccessToken();
-        debugPrint("Authorization token: $token");
+        debugPrint('Authorization token: $token');
 
         if (token != null) {
           options ??= Options();
