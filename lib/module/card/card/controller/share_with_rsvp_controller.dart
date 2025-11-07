@@ -108,7 +108,7 @@ class ShareWithRsvpController extends GetxController {
     super.onInit();
     print('CID!!! in arguments = ${Get.arguments} ');
     if (Get.arguments != null && Get.arguments['cId'] != null) {
-      cId = Get.arguments['cId'];
+      cId = Get.arguments['cId']??'zDUiJVHc_MtR';
       print('CID in arguments = $cId ');
     }
   }
@@ -120,7 +120,8 @@ class ShareWithRsvpController extends GetxController {
       final Map<String, dynamic> body = {
         'cId': cId,
         'event_title': eventTitle.text.trim(),
-        'event_datetime': _formatDate(eventDateTime.text.trim()),
+              "event_datetime": "2025-11-09 00:00:00",
+        // 'event_datetime': _formatDate(eventDateTime.text.trim()),
         'event_hosted_by': hostedBy.text.trim(),
         'is_virtual': isVirtual.value ? 1 : 0,
         'event_address': isVirtual.value ? '' : address.text.trim(),
@@ -168,6 +169,7 @@ class ShareWithRsvpController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.snackbar('Success', 'Event Info submitted successfully!');
+        Get.offAllNamed(AppRoutes.mainScreen);
       } else {
         final errorMsg =
             jsonDecode(response.body)['message'] ?? 'Unknown error occurred';
