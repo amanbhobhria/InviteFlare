@@ -1,4 +1,6 @@
 import 'package:intl/intl.dart';
+import 'package:invite_flare/core_2/core/values/app_colors.dart';
+import 'package:invite_flare/core_2/core/values/app_global_values.dart';
 import 'package:invite_flare/core_2/core/widgets/custom_textfield.dart';
 import 'package:invite_flare/export.dart';
 import 'package:invite_flare/module/card/card/controller/share_with_rsvp_controller.dart';
@@ -35,6 +37,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
   Column thirdWidget() => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         const Text('Guest Name (Optional)',
             style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
@@ -52,7 +55,37 @@ class ShareWithRsvpScreen extends StatelessWidget {
           textController: controller.guestEmailController,
           inputType: TextInputType.emailAddress,
           hint: 'e.g., john.smith@example.com',
-        ),
+
+          validate: (value) {
+            final text = value?.toString().trim() ?? "";
+
+            if (text.isEmpty) {
+              return "Email is required";
+            }
+
+            // ✅ Simple but strong email regex
+            final emailPattern =
+                r'^[\w\.-]+@[\w\.-]+\.\w+$';
+
+            final isValidEmail = RegExp(emailPattern).hasMatch(text);
+
+            if (!isValidEmail) {
+              return "Enter a valid email address";
+            }
+
+            return null;
+          },
+        )
+
+        ,
+
+
+        // TextFieldWidget(
+        //
+        //   textController: controller.guestEmailController,
+        //   inputType: TextInputType.emailAddress,
+        //   hint: 'e.g., john.smith@example.com',
+        // ),
 
         // --- Email Required Error Text ---
         Obx(() => controller.isEmailRequired.value
@@ -194,16 +227,25 @@ class ShareWithRsvpScreen extends StatelessWidget {
           ),
           SizedBox(width: 15),
           Expanded(
-            child: ElevatedButton(
-              onPressed: () {
-                controller.hitAddEventInfoApi();
-              },
-              child: Text('Next', style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-                padding: EdgeInsets.symmetric(vertical: 15),
-              ),
-            ),
+
+            child:
+  MaterialButtonWidget(
+    onPressed: () {
+      if(controller.addedGuests.length==0){
+        Get.snackbar('', 'Add atleast one guest',colorText: appColor);
+
+      }
+      else
+        {
+          controller.hitAddEventInfoApi();
+        }
+
+    },
+  buttonText: "Next",
+  ),
+
+
+
           ),
         ],
       ),
@@ -227,83 +269,81 @@ class ShareWithRsvpScreen extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 10),
-          OutlinedButton.icon(
-            onPressed: () {
-              Get.defaultDialog(
-                title: "Add Gift",
-                content: Column(
-                  children: [
-                    TextField(
-                      controller: giftNameController,
-                      decoration: const InputDecoration(labelText: "Gift Name"),
-                    ),
-                    TextField(
-                      controller: giftUrlController,
-                      decoration: const InputDecoration(labelText: "Gift URL"),
-                    ),
-                  ],
-                ),
-                textConfirm: "Add",
-                textCancel: "Cancel",
-                onConfirm: () {
-                  controller.addGift(
-                      giftNameController.text, giftUrlController.text);
-                  giftNameController.clear();
-                  giftUrlController.clear();
-                  Get.back();
-                },
+      OutlinedButton.icon(
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: appColor, width: 1),
+        ),
+        onPressed: () {
+          Get.defaultDialog(
+            title: "Add Registry",
+            content: Form(
+              key: controller.giftFormKey,
+              child: Column(
+                children: [
+                  // ✅ Gift Name (Required)
+                  TextFieldWidget(
+                    labelText: 'Registry Name',
+                    maxline: 2,
+                    textController: giftNameController,
+                    validate: (value) {
+                      final text = value?.toString().trim() ?? "";
+                      if (text.isEmpty) return 'Registry name is required';
+                      return null;
+                    },
+                  ),
+
+                  // ✅ Gift URL (Required + Valid)
+                  TextFieldWidget(
+                    labelText: 'Registry URL',
+                    maxline: 1,
+                    textController: giftUrlController,
+                    validate: (value) {
+                      final text = value?.toString().trim() ?? "";
+
+                      if (text.isEmpty) return 'Registry URL is required';
+
+                      final urlPattern =
+                          r'^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(?:\/\S*)?$';
+                      final isValidUrl = RegExp(urlPattern).hasMatch(text);
+
+                      if (!isValidUrl) return 'Please enter a valid URL';
+
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            textConfirm: "Add",
+            textCancel: "Cancel",
+
+            // ✅ Validate before adding gift
+            onConfirm: () {
+              final isValid = controller.giftFormKey.currentState!.validate();
+              if (!isValid) return;
+
+              controller.addGift(
+                giftNameController.text,
+                giftUrlController.text,
               );
+
+              giftNameController.clear();
+              giftUrlController.clear();
+
+              Get.back();
             },
-            icon: const Icon(Icons.add),
-            label: const Text("Add Gift"),
-          ),
+          );
+        },
+        icon: const Icon(Icons.add),
+        label: const Text("Add Gift"),
+      )
+
+
         ],
       ));
   }
 
-  // Widget _buildGiftSection() {
-  //   final giftController = TextEditingController();
-  //   return Obx(() {
-  //     return Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Wrap(
-  //           spacing: 8,
-  //           children: controller.gifts
-  //               .map((gift) => Chip(
-  //                     label: Text(gift),
-  //                     onDeleted: () => controller.removeGift(gift),
-  //                     deleteIcon: const Icon(Icons.close, size: 18),
-  //                   ))
-  //               .toList(),
-  //         ),
-  //         const SizedBox(height: 10),
-  //         OutlinedButton.icon(
-  //           onPressed: () {
-  //             Get.defaultDialog(
-  //               title: "Add Gift",
-  //               content: TextField(
-  //                 controller: giftController,
-  //                 decoration: const InputDecoration(
-  //                   labelText: "Gift Name",
-  //                 ),
-  //               ),
-  //               textConfirm: "Add",
-  //               textCancel: "Cancel",
-  //               onConfirm: () {
-  //                 controller.addGift(giftController.text);
-  //                 giftController.clear();
-  //                 Get.back();
-  //               },
-  //             );
-  //           },
-  //           icon: const Icon(Icons.add),
-  //           label: const Text("Add Gift"),
-  //         ),
-  //       ],
-  //     );
-  //   });
-  // }
 
   Widget _buildStepIndicator() {
     Widget circle(int step, bool filled) => CircleAvatar(
@@ -351,10 +391,15 @@ class ShareWithRsvpScreen extends StatelessWidget {
   }
 
   firstWidget() => Padding(
-      padding: const EdgeInsets.all(16.0),
+    padding: const EdgeInsets.all(16.0),
+
+    // ✅ FORM WRAPS THE ENTIRE COLUMN
+    child: Form(
+      key: controller.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           // Event Title + Hosted By
           Row(
             children: [
@@ -363,6 +408,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
                   "Event Title",
                   "e.g., Birthday Celebration or Product Launch",
                   controller.eventTitle,
+                  isRequired: true,
                 ),
               ),
               const SizedBox(width: 10),
@@ -371,17 +417,13 @@ class ShareWithRsvpScreen extends StatelessWidget {
                   "Hosted By",
                   "e.g., John Smith or Acme Corporation",
                   controller.hostedBy,
+                  isRequired: true,
                 ),
               ),
             ],
           ),
 
           const SizedBox(height: 16),
-
-
-
-
-
 
           // Event Date & Time
           _buildTextField(
@@ -390,6 +432,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
             controller.eventDateTime,
             suffixIcon: const Icon(Icons.calendar_today),
             isCalendar: true,
+            isRequired: true,
           ),
 
           const SizedBox(height: 16),
@@ -403,11 +446,11 @@ class ShareWithRsvpScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               Obx(() => Switch(
-                    inactiveThumbColor: Colors.grey.shade100,
-                    inactiveTrackColor: Colors.grey,
-                    value: controller.isVirtual.value,
-                    onChanged: (val) => controller.isVirtual.value = val,
-                  )),
+                inactiveThumbColor: Colors.grey.shade100,
+                inactiveTrackColor: Colors.grey,
+                value: controller.isVirtual.value,
+                onChanged: (val) => controller.isVirtual.value = val,
+              )),
             ],
           ),
 
@@ -415,31 +458,34 @@ class ShareWithRsvpScreen extends StatelessWidget {
 
           // Address + Location
           Obx(
-            () => controller.isVirtual.value
+                () => controller.isVirtual.value
                 ? _buildTextField(
-                    "Virtual link",
-                    "https://www.google.com",
-                    controller.address,
-                  )
+                  requiredType: 'virtual',
+                  isRequired: true,
+              "Virtual link",
+              "https://www.google.com",
+              controller.address,
+            )
                 : Row(
-                    children: [
-                      Expanded(
-                        child: _buildTextField(
-                          "Address",
-                          "e.g., 123 Main Street or Online Event",
-                          controller.address,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: _buildTextField(
-                          "Location (Optional)",
-                          "e.g., The Grand Ballroom or Zoom Meeting",
-                          controller.location,
-                        ),
-                      ),
-                    ],
+              children: [
+                Expanded(
+                  child: _buildTextField(
+                    isRequired: true,
+                    "Address",
+                    "e.g., 123 Main Street or Online Event",
+                    controller.address,
                   ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _buildTextField(
+                    "Location (Optional)",
+                    "e.g., The Grand Ballroom or Zoom Meeting",
+                    controller.location,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(height: 16),
@@ -467,11 +513,11 @@ class ShareWithRsvpScreen extends StatelessWidget {
                 ],
               ),
               Obx(() => Switch(
-                    inactiveThumbColor: Colors.grey.shade100,
-                    inactiveTrackColor: Colors.grey,
-                    value: controller.isConfetti.value,
-                    onChanged: (val) => controller.isConfetti.value = val,
-                  )),
+                inactiveThumbColor: Colors.grey.shade100,
+                inactiveTrackColor: Colors.grey,
+                value: controller.isConfetti.value,
+                onChanged: (val) => controller.isConfetti.value = val,
+              )),
             ],
           ),
 
@@ -493,21 +539,35 @@ class ShareWithRsvpScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          // Next Button
+          // ✅ Next Button Validation
           SizedBox(
+
             width: double.infinity,
             height: 48,
             child: MaterialButtonWidget(
+              buttonText: "Next",
               onPressed: () {
+                final isValid =
+                controller.formKey.currentState!.validate();
+
+                if (!isValid) {
+                  print("Validation failed — some fields are empty.");
+                  return;
+                }
+
                 controller.selectIndex.value = 2;
                 print("index2");
               },
-              buttonText: "Next",
+
+
+
             ),
           ),
         ],
       ),
-    );
+    ),
+  );
+
 
   secondWidget() => Column(
       children: [
@@ -594,12 +654,21 @@ class ShareWithRsvpScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Text("Send Reminder",
+                    const Text("Send Reminder",
                         style: TextStyle(fontWeight: FontWeight.w600)),
-                    SizedBox(width: 5),
-                    Icon(Icons.info_outline, size: 18),
+                    const SizedBox(width: 5),
+                    InkWell(child: const Icon(Icons.info_outline, size: 18,color: appColor,),
+                      onTap:() {
+                        Get.defaultDialog(
+                          middleText: "Remind guests about the event closer to the date.",
+                          textConfirm: 'OK',
+                            onConfirm:() {Get.back();},
+                        );
+
+                      },
+                    ),
                   ],
                 ),
                 Obx(() => Switch(
@@ -725,35 +794,112 @@ class ShareWithRsvpScreen extends StatelessWidget {
 
 
 
-
-
-
-  // ---------------- Widgets ----------------
   Widget _buildTextField(
-      String label, String hint, TextEditingController controller,
-      {Widget? suffixIcon, int maxLines = 1,bool isCalendar=false, Function(String)? onChanged}) => TextFieldWidget(
+      String label,
+      String hint,
+      TextEditingController controller, {
+        Widget? suffixIcon,
+        int maxLines = 1,
+        bool isRequired = false,
+        String? requiredType,
+        bool isCalendar = false,
+        Function(String)? onChanged,
+      }) => TextFieldWidget(
       textController: controller,
-
+      readOnly: isCalendar,
       maxline: maxLines,
       labelText: label,
       hint: hint,
       suffixIcon: suffixIcon,
-     onTap: () => {
-        if(isCalendar==true){
-          pickEventDateTime(),
+
+      onTap: () {
+        if (isCalendar) {
+          pickEventDateTime();
+        }
+      },
+
+      validate: isRequired
+          ? (value) {
+        final text = value?.toString().trim() ?? "";
+
+        // ✅ Required validation
+        if (text.isEmpty) {
+          if (requiredType == 'virtual') {
+            return 'Virtual link is required';
+          }
+          return '$label is required';
         }
 
+        // ✅ URL validation for virtual links
+        if (requiredType == 'virtual') {
+          final urlPattern =
+              r'^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(?:\/\S*)?$';
+          final isValidUrl = RegExp(urlPattern).hasMatch(text);
 
-     },
-      // decoration: InputDecoration(
-      //   labelText: label,
-      //   hintText: hint,
-      //   suffixIcon: suffixIcon,
-      //   border: OutlineInputBorder(
-      //     borderRadius: BorderRadius.circular(6),
-      //   ),
-      // ),
+          if (!isValidUrl) {
+            return 'Please enter a valid link';
+          }
+        }
+
+        return null;
+      }
+          : null,
     );
+
+
+
+
+
+
+
+
+
+  // ---------------- Widgets ----------------
+  // Widget _buildTextField(
+  //     String label, String hint, TextEditingController controller,
+  //     {Widget? suffixIcon, int maxLines = 1,
+  //       bool isRequired = false,
+  //       var requiredType,
+  //       bool isCalendar=false, Function(String)? onChanged}) => TextFieldWidget(
+  //     textController: controller,
+  //     readOnly: isCalendar,
+  //
+  //     maxline: maxLines,
+  //     labelText: label,
+  //     hint: hint,
+  //     suffixIcon: suffixIcon,
+  //    onTap: () => {
+  //       if(isCalendar==true){
+  //         pickEventDateTime(),
+  //       }
+  //
+  //
+  //    },
+  //   validate: isRequired
+  //       ? (value) {
+  //     if (value == null || value.toString().trim().isEmpty) {
+  //       if (requiredType == 'virtual') {
+  //         if (value.isEmpty) {
+  //           return 'Virtual link is required';
+  //         }
+  //
+  //         final urlPattern =
+  //             r'^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(?:\/\S*)?$';  // ✅ Simple URL regex
+  //         final isValidUrl = RegExp(urlPattern).hasMatch(value);
+  //
+  //         if (!isValidUrl) {
+  //           return 'Please enter a valid link';
+  //         }
+  //       }
+  //
+  //       return '$label is required';
+  //     }
+  //     return null;
+  //   }
+  //       : null,
+  // );
+
+
 
 
 

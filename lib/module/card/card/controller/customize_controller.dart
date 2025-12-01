@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:invite_flare/core/services/token_service.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
@@ -439,10 +440,51 @@ class CustomizeController extends GetxController {
         'cData': jsonEncode(cDataMap), // must be stringified JSON
       };
 
+
+      var token = await TokenService().getAccessToken();
+
+       final url = Uri.parse(
+        "https://dev.inviteflare.com/api/v1/invitations/cards/customize",
+      );
+
+      final response = await http.patch(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(body),
+      );
+
+
+      dev.log('✅ API Response Code: ${response.statusCode}');
+      dev.log('✅ API Response Body: ${response.body}');
+      final decoded = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        dev.log("✅ Extracted cId: $userCid");
+
+        userCid=  decoded['cId'] ?? 'zDUiJVHc_MtR';
+      } else {
+        final errorMsg =
+            jsonDecode(response.body)['message'] ?? 'Unknown error occurred';
+        final errorMsg1 = decoded['message'] ?? 'Unknown error occurred';
+        dev.log('errorMsg1 = $errorMsg1}');
+        dev.log('errorMsg = $errorMsg}');
+
+        Get.snackbar('Error', errorMsg);
+      }
+
+
+
+
+
+
       // 3️⃣ Send PATCH request
-      final response = await DioClient(Dio())
-          .patch('v1/invitations/cards/customize', data: body, skipAuth: false);
-      userCid= response['cId']??'zDUiJVHc_MtR';
+      // final response = await DioClient(Dio())
+      // final response = await http.patch('v1/invitations/cards/customize', data: body, skipAuth: false);
+      // userCid= response['cId']??'zDUiJVHc_MtR';
 
     } catch (e, st) {
       dev.log('❌ PATCH error: $e\n$st');

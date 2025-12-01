@@ -1,24 +1,34 @@
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:invite_flare/core/services/token_service.dart';
+import 'package:invite_flare/core_2/core/values/app_colors.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/export.dart';
 
 class ShareWithRsvpController extends GetxController {
   var isVirtual = false.obs;
   var isConfetti = false.obs;
+  final formKey = GlobalKey<FormState>();
+  final giftFormKey = GlobalKey<FormState>();
+
 
   var gifts = <Map<String, String>>[].obs;
   RxInt selectIndex = 1.obs;
   final isLoading = false.obs;
 
   var cId = '';
-  final eventTitle = TextEditingController();
-  final hostedBy = TextEditingController();
+  // final eventTitle = TextEditingController(text:kDebugMode);
+  final eventTitle = TextEditingController(
+    text: kDebugMode ? "Happy Birthday" : "",
+  );
+
+
+  final hostedBy = TextEditingController(text: kDebugMode ? "AMAN" : "",);
   final eventDateTime = TextEditingController();
-  final address = TextEditingController();
+  final address = TextEditingController(text: kDebugMode ? "Mohali" : "",);
   final location = TextEditingController();
   final virtualLink = TextEditingController();
   final description = TextEditingController();
@@ -120,8 +130,9 @@ class ShareWithRsvpController extends GetxController {
       final Map<String, dynamic> body = {
         'cId': cId,
         'event_title': eventTitle.text.trim(),
-              "event_datetime": "2025-11-09 00:00:00",
+              // "event_datetime": "2025-11-09 00:00:00",
         // 'event_datetime': _formatDate(eventDateTime.text.trim()),
+        'event_datetime': eventDateTime.text.trim(),
         'event_hosted_by': hostedBy.text.trim(),
         'is_virtual': isVirtual.value ? 1 : 0,
         'event_address': isVirtual.value ? '' : address.text.trim(),
@@ -168,13 +179,43 @@ class ShareWithRsvpController extends GetxController {
       dev.log('✅ API Response Body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Get.snackbar('Success', 'Event Info submitted successfully!');
-        Get.offAllNamed(AppRoutes.mainScreen);
-      } else {
-        final errorMsg =
-            jsonDecode(response.body)['message'] ?? 'Unknown error occurred';
+        Get.snackbar('Success', 'Event Info submitted successfully!',colorText: appColor);
+        Get.offAllNamed(AppRoutes.homeScreen);
+      }
+      else {
+        final decoded = jsonDecode(response.body);
+
+        // ✅ Main message
+        String errorMsg = decoded['message'] ?? 'Unknown error occurred';
+
+        // ✅ Additional validation errors (422)
+        if (decoded['errors'] != null) {
+          // Extract all error messages from the map
+          final errorList = <String>[];
+
+          decoded['errors'].forEach((key, value) {
+            if (value is List && value.isNotEmpty) {
+              errorList.add(value.first.toString());
+            }
+          });
+
+          // ✅ Append the backend validation messages
+          if (errorList.isNotEmpty) {
+            errorMsg = errorList.join("\n");
+          }
+        }
+
         Get.snackbar('Error', errorMsg);
       }
+
+
+
+
+      // else {
+      //   final errorMsg =
+      //       jsonDecode(response.body)['message'] ?? 'Unknown error occurred';
+      //   Get.snackbar('Error', errorMsg);
+      // }
     } catch (e, st) {
       dev.log('❌ API Error: $e\n$st');
       Get.snackbar('Error', 'Failed to submit event info. Please try again.');

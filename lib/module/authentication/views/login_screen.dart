@@ -21,12 +21,13 @@ class LoginScreen extends StatelessWidget {
         children: [
           const IFSpace(space: IFSpaces.xxxxxxL),
           const IFHeading(
-            text: "Login",
+            text: "Log In",
             headingSize: IFHeadingSize.xxxxxxL,
             textWeight: IFTextWeight.regular,
-          ),
+          ).marginOnly(top: 30),
           const IFText(
-            text: "Welcome back",
+            // text: "Welcome back",
+            text: "Welcome back! Your peace of mind starts here",
             textSize: IFTextSize.S,
           ),
           const IFSpace(space: IFSpaces.xxxxL),

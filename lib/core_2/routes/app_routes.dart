@@ -41,7 +41,7 @@ abstract class AppRoutes {
   static const forgotPassword = '/forgotPassword';
   static const mainScreen = '/mainScreen';
   static const customizeScreen = '/customize-screen';
-  static const home = '/home';
+  static const homeScreen = '/homeScreen';
   static const itemView = '/itemView';
   static const profile = '/profile';
   static const profileSetup = '/profileSetup';
