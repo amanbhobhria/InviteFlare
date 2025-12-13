@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:if_loop_components/if_loop_components.dart';
 import 'package:invite_flare/core/utilities/utilities.dart';
 import 'package:invite_flare/module/card/card/views/category_detail_screen.dart';
 import 'package:invite_flare/module/main/controller/home_controller.dart';
@@ -8,9 +9,6 @@ import 'package:invite_flare/module/main/widget/home_widget/expandable_card_view
 import 'package:invite_flare/module/main/widget/home_widget/promo_banner_widget.dart';
 import 'package:invite_flare/module/main/widget/home_widget/slogan_view_widget.dart';
 import 'package:invite_flare/shared/presentation/presentation.dart';
-
-import 'package:if_loop_components/if_loop_components.dart';
-import 'package:invite_flare/core/di/di.dart'; // getIt
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -37,7 +35,6 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-// Categories Horizontal List (Improved placeholder)
             Obx(() {
               if (homeController.isCategoryLoading.value) {
                 return const Padding(
@@ -49,28 +46,31 @@ class HomeScreen extends StatelessWidget {
               final categories = homeController.cateroiesResponseModel ?? [];
 
               return SizedBox(
-                height: 160, // fixed height for horizontal cards
+                height: 160,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   itemCount: categories.length,
                   separatorBuilder: (_, __) => const SizedBox(width: 12),
                   itemBuilder: (context, index) {
                     final category = categories[index];
 
+                    final bgColor = homeController.categoryBgColors[
+                        index % homeController.categoryBgColors.length];
+
+                    final iconPath = homeController.categoryIcons[
+                        index % homeController.categoryIcons.length];
+
                     return GestureDetector(
                       onTap: () {
-                        debugPrint('Category Tapped: ${category.children}');
                         Get.to(
-                              () =>  CategoryDetailScreen(),
-                          arguments: {'category': category.children ?? []},
+                          () => CategoryDetailScreen(),
+                          arguments: {
+                            'category': category.children ?? [],
+                            'image': category.images,
+                          },
                         );
-
-
-
-                        // Get.toNamed(AppRoutes.cardDetailScreen, arguments: {
-                        //   'category': category,
-                        // });
                       },
                       child: Container(
                         width: 140,
@@ -85,40 +85,40 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            // Placeholder top block instead of avatar
-                            Container(
-                              height: 90,
-                              decoration: BoxDecoration(
-                                color: Utilities.colorFromHex('#fde7c2'),
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(16)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: bgColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              /// Icon
+                              Image.asset(
+                                iconPath,
+                                width: 56,
+                                height: 56,
+                                fit: BoxFit.contain,
                               ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.category,
-                                  size: 36,
-                                  color: Colors.white70,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Text(
+
+                              const SizedBox(height: 8),
+
+                              /// Title inside background
+                              Text(
                                 category.title ?? '',
                                 textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black87,
                                 ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -127,49 +127,6 @@ class HomeScreen extends StatelessWidget {
               );
             }),
 
-
-
-
-
-
-
-            // // Categories
-            // Obx(() {
-            //   if (homeController.isCategoryLoading.value) {
-            //     return const Center(child: CircularProgressIndicator());
-            //   }
-            //   return SingleChildScrollView(
-            //     scrollDirection: Axis.horizontal,
-            //     padding:
-            //         const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            //     child: Row(
-            //       children: List.generate(
-            //         homeController.cateroiesResponseModel?.length ?? 0,
-            //         (index) {
-            //           CategoriesData category =
-            //               homeController.cateroiesResponseModel[index];
-            //           return Padding(
-            //             padding: const EdgeInsets.only(right: 12),
-            //             child: CategoryTile(
-            //               name: category.title ?? '',
-            //               icon: category.slug ?? '',
-            //               cardColor: Utilities.colorFromHex('#fbf6ee'),
-            //               onTap: () {
-            //                 debugPrint('Category Tapped');
-            //                 // Get.to(() => CardDetailScreen());
-            //                 Get.toNamed(AppRoutes.cardDetailScreen);
-            //               },
-            //             ),
-            //           );
-            //         },
-            //       ),
-            //     ),
-            //   );
-            //
-            //   ;
-            // }),
-
-            // Promo Banner
             const PromoBannerWidget(),
 
             const IFSpace(),
@@ -203,16 +160,7 @@ class HomeScreen extends StatelessWidget {
 
             Divider(thickness: 8, color: Colors.grey.shade100),
 
-            // Explainer Section
-            // Obx(() {
-            //   if (homeController.isExplainerLoading.value) {
-            //     return const Center(child: CircularProgressIndicator());
-            //   }
-            //   return ExplainerSectionView(
-            //     heading: homeController.explainerData['heading'],
-            //     steps: homeController.explainerData['section'],
-            //   );
-            // }),
+
 
             Divider(thickness: 8, color: Colors.grey.shade100),
 

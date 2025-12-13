@@ -7,7 +7,10 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
-const String iconAbout = "assets/icons/about.png";
+const String iconWedding = "assets/images/png/wedding_icon.png";
+const String iconBabyKids = "assets/images/png/baby_kids_icon.png";
+const String iconBirthday = "assets/images/png/birthday_icon.png";
+const String iconAbout = "assets/images/png//about.png";
 const String iconMealCheck = "assets/icons/mealCheck.png";
 const String iconMealCarb = "assets/icons/mealCarb.png";
 const String iconMealProtein = "assets/icons/mealProtein.png";

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:invite_flare/core/base/base.dart';
 import 'package:invite_flare/core/base/usecase.dart';
+import 'package:invite_flare/core/utilities/utilities.dart';
+import 'package:invite_flare/core_2/core/values/app_assets.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/dio_client.dart';
 import 'package:invite_flare/core_2/data/remote_service/network/network_exceptions.dart';
 import 'package:invite_flare/module/main/model/categories_response_model.dart';
@@ -44,7 +46,7 @@ Personalize colors, text, and photos to match your celebration theme.''',
         'step': 'Step-3',
         'title': 'Share the Joy',
         'subTitle': '''
-Send invitations instantly online or download for printing with ease.''',
+Send invitations instantly online or download for debugPrinting with ease.''',
         'lottieJson': 'assets/lottie/sending-letter.json',
         'colorBg': 0xFFFCF1E6,
       },
@@ -97,19 +99,20 @@ Fill their inbox with cheer with Christmas cards you can email, text, or share''
           if (value != null) {
             categoryDataResponseModel =
                 CategoryDataResponseModel.fromJson(value);
-            cateroiesResponseModel.clear(); // old data hatane ke liye
+            cateroiesResponseModel.clear();
             cateroiesResponseModel
                 .addAll(categoryDataResponseModel.categories ?? []);
 
-            print(
+            debugPrint(
+
                 'Cateriiiiiiiiiiiiiiii--------------${cateroiesResponseModel.length}');
             update();
           }
         },
       ).onError(
         (error, stackTrace) {
-          print('Error---$error');
-          print('Error---$stackTrace');
+          debugPrint('Error---$error');
+          debugPrint('Error---$stackTrace');
           NetworkExceptions.getDioException(error);
         },
       );
@@ -118,23 +121,23 @@ Fill their inbox with cheer with Christmas cards you can email, text, or share''
     }
   }
 
-  // Future<void> fetchExplainerSection() async {
-  //   try {
-  //     isExplainerLoading.value = true;
-  //     final result = await explainerUseCase();
-  //     explainerData.assignAll(result);
-  //   } finally {
-  //     isExplainerLoading.value = false;
-  //   }
-  // }
 
-  // Future<void> fetchExpandableCards() async {
-  //   try {
-  //     isExpandableLoading.value = true;
-  //     final result = await expandableCardUseCase();
-  //     expandableCardData.assignAll(result);
-  //   } finally {
-  //     isExpandableLoading.value = false;
-  //   }
-  // }
+  final List<Color> categoryBgColors = [
+    Utilities.colorFromHex('#FFF0D5'),
+    Utilities.colorFromHex('#F4F4FF'),
+    Utilities.colorFromHex('#FFF2F4'),
+    Utilities.colorFromHex('#EAFFF8'),
+  ];
+
+  final List<String> categoryIcons = [
+    iconWedding,
+    iconBabyKids,
+    iconBirthday,
+  ];
+
+
+
+
+
+
 }

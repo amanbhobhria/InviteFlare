@@ -1,6 +1,4 @@
-import 'package:intl/intl.dart';
 import 'package:invite_flare/core_2/core/values/app_colors.dart';
-import 'package:invite_flare/core_2/core/values/app_global_values.dart';
 import 'package:invite_flare/core_2/core/widgets/custom_textfield.dart';
 import 'package:invite_flare/export.dart';
 import 'package:invite_flare/module/card/card/controller/share_with_rsvp_controller.dart';
@@ -75,19 +73,9 @@ class ShareWithRsvpScreen extends StatelessWidget {
 
             return null;
           },
-        )
-
-        ,
+        ) ,
 
 
-        // TextFieldWidget(
-        //
-        //   textController: controller.guestEmailController,
-        //   inputType: TextInputType.emailAddress,
-        //   hint: 'e.g., john.smith@example.com',
-        // ),
-
-        // --- Email Required Error Text ---
         Obx(() => controller.isEmailRequired.value
             ? const Text('Email is required.',
                 style: TextStyle(color: Colors.red))
@@ -218,11 +206,11 @@ class ShareWithRsvpScreen extends StatelessWidget {
               onPressed: () {
                 controller.selectIndex.value = 2;
               },
-              child: Text('Back', style: TextStyle(color: Colors.teal)),
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: Colors.teal),
                 padding: EdgeInsets.symmetric(vertical: 15),
               ),
+              child: const Text('Back', style: TextStyle(color: Colors.teal)),
             ),
           ),
           SizedBox(width: 15),
@@ -273,6 +261,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: appColor, width: 1),
         ),
+
         onPressed: () {
           Get.defaultDialog(
             title: "Add Registry",
@@ -302,7 +291,7 @@ class ShareWithRsvpScreen extends StatelessWidget {
 
                       if (text.isEmpty) return 'Registry URL is required';
 
-                      final urlPattern =
+                      const urlPattern =
                           r'^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(?:\/\S*)?$';
                       final isValidUrl = RegExp(urlPattern).hasMatch(text);
 

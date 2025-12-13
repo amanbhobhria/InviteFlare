@@ -7,10 +7,12 @@ import 'package:invite_flare/module/main/model/category_data_response_model.dart
 
 class CategoryDetailController extends GetxController {
   RxList<ChildrenData> categoryList = <ChildrenData>[].obs;
+  List<Images>? imageList = [];
 
   getArgument() {
     if (Get.arguments != null) {
       categoryList.value = Get.arguments['category'] as List<ChildrenData>;
+      imageList = Get.arguments['image'] ?? [];
       print('object-------${categoryList.length}');
     }
   }
